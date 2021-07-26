@@ -1,0 +1,30 @@
+[alias]
+	amend = commit --amend
+	cat = cat-file -p
+	ff = merge --ff-only
+	fixup = commit --fixup
+	force = push --force-with-lease
+	graph = log --all --graph --oneline
+	l = log --oneline
+	ls = ls-files
+	s = status
+	shortdiff = diff -w -U0 --color-words='\\w+|.' --color=always
+	staged = diff --staged
+	tagdate = !git tag $(date -u +%Y%m%d.%H%M%S)
+	uncommit = reset HEAD^ --
+	unstage = reset HEAD --
+[commit]
+	gpgsign = true
+[diff]
+	wordregex = "[a-zA-Z0-9]+|."
+[include]
+	sign = true
+[init]
+	defaultBranch = devel
+[merge]
+	conflictstyle = diff3
+[push]
+	default = simple
+[user]
+	email = lars.jellema@gmail.com
+	name = Lars Jellema
