@@ -1,1 +1,6 @@
-import ./nixpkgs { overlays = [ (import ./pkgs) ]; }
+import ./nixpkgs {
+  overlays = [
+    (import ./pkgs)
+    (import ./dev)
+  ];
+}
