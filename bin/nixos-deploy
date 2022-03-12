@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+shopt -s inherit_errexit
+
+profile="/nix/var/nix/profiles/system"
+
+unset action machine system target
+
+while [ $# -gt 0 ]; do
+  i="$1"; shift 1
+  case "$i" in
+    --help|-h)
+      echo 'nixos ACTION [ MACHINE ]'
+      echo '  -f, --file     Nix file to find machine attribute in.'
+      echo '  -p, --profile  Path to the profile to update.'
+      echo '  -t, --target   SSH hostname to update.'
+      exit
+      ;;
+    --profile|-p)
+      if [ "$#" -eq 0 ]; then
+        echo "$0: $i requires an argument" >&2
+        exit 1
+      fi
+      profile="$1"
+      shift 1
+      ;;
+    --target|-t)
+      if [ "$#" -eq 0 ]; then
+        echo "$0: $i requires an argument" >&2
+        exit 1
+      fi
+      target="$1"
+      shift 1
+      ;;
+    --file|-f)
+      if [ "$#" -eq 0 ]; then
+        echo "$0: $i requires an argument" >&2
+        exit 1
+      fi
+      NIXOS_MACHINES="$1"
+      shift 1
+      ;;
+    -*)
+      echo "$0: unknown option '$i'" >&2
+      exit 1
+      ;;
+    *)
+      if [ -z "$action" ]; then
+        action="$i"
+      elif [ -z "$machine" ]; then
+        machine="$i"
+      else
+        echo "$0: unknown option '$i'" >&2
+        exit 1
+      fi
+      ;;
+  esac
+done
+
+if [ -z "$machine" -a -n "$target" ]; then
+  echo "$0: Cannot set target without setting machine" >&2
+  exit 1
+fi
+
+if [ -z "$machine" ]; then
+  machine="$(hostname)"
+fi
+
+if [ -z "$target" ]; then
+  target="$machine"
+fi
+
+atTarget="ssh -l root $target"
+
+case "$action" in
+  boot|copy|switch|test)
+    system=$(nix-build --no-out-link "$NIXOS_MACHINES" -A "$machine.system")
+    nix-copy-closure --use-substitutes --to "$target" "$system"
+    ;;
+  vm)
+    system=$(nix-build --no-out-link "$NIXOS_MACHINES" -A "$machine.vm")
+    echo "$ ls $system/bin" >&2
+    ls "$system/bin"
+    exit 0
+    ;;
+  build)
+    nix-build --no-out-link "$NIXOS_MACHINES" -A "$machine.system"
+    exit 0
+    ;;
+  instantiate)
+    nix-instantiate "$NIXOS_MACHINES" -A "$machine.system"
+    exit 0
+    ;;
+  *)
+    echo "$0: unknown action '$action'" >&2
+    exit 1
+    ;;
+esac
+
+case "$action" in
+  boot|switch)
+    $atTarget nix-env -p "$profile" --set "$system"
+    ;;
+esac
+
+case "$action" in
+  boot|switch|test)
+    $atTarget "$system/bin/switch-to-configuration" "$action"
+    ;;
+esac
