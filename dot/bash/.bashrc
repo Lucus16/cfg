@@ -3,8 +3,10 @@ export GOPROXY=direct
 export HISTCONTROL=ignoreboth
 export HISTFILESIZE=1048576
 export HISTSIZE=1048576
+export MANWIDTH=80
 export NIX_PATH=nixpkgs=$HOME/cfg/nixpkgs
 export NIXOS_MACHINES=$HOME/cfg/dev
+export PAGER='less -FX'
 
 alias cp='cp -i --reflink=auto'
 alias dd='tisdone dd status=progress'
@@ -14,6 +16,7 @@ alias htop='htop -d20'
 alias ip6='ip -6'
 alias l='ls --color=auto --quoting-style=literal'
 alias la='ls -hal --color=auto --quoting-style=literal'
+alias less='less -FX'
 alias make='tisdone make'
 alias mit-scheme='rlwrap mit-scheme'
 alias mupdf='mupdf-x11'

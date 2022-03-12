@@ -15,6 +15,8 @@
 	unstage = reset HEAD --
 [commit]
 	gpgsign = true
+[core]
+	pager = less -FX
 [diff]
 	wordregex = "[a-zA-Z0-9]+|."
 [include]
