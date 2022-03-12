@@ -6,7 +6,7 @@
   environment.systemPackages = with pkgs; [
     gitMinimal
     htop
-    manpages
+    man-pages
     neovim
     ripgrep
   ];
@@ -20,7 +20,7 @@
   services.openssh = {
     enable = true;
     passwordAuthentication = false;
-    challengeResponseAuthentication = false;
+    kbdInteractiveAuthentication = false;
   };
 
   services.xserver.displayManager.job.logToJournal = false;

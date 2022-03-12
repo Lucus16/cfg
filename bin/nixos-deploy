@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -eo pipefail
 shopt -s inherit_errexit
 
 profile="/nix/var/nix/profiles/system"
