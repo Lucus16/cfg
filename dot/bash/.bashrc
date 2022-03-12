@@ -31,5 +31,5 @@ function enter {
 }
 
 function rest {
-  st -d "$PWD" 2>/dev/null >/dev/null &
+  i3-msg exec -- st -d "$PWD" >/dev/null
 }
