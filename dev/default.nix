@@ -1,5 +1,6 @@
 let
   machines = {
+    amateria = ./amateria.nix;
     relto = ./relto.nix;
   };
 
