@@ -117,7 +117,7 @@ in {
   };
 
   security.acme.acceptTerms = true;
-  security.acme.email = "acme@u16.nl";
+  security.acme.defaults.email = "acme@u16.nl";
 
   services.borgbackup.jobs = {
     quassel = common-borg-options // {

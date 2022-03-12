@@ -1,18 +1,10 @@
-self: super:
-
 let
-  inherit (super) lib;
-  eval-config = import ../nixpkgs/nixos/lib/eval-config.nix;
-  eval-module = config: eval-config { modules = [ config ]; };
-
-  configs = lib.mapAttrs (name: eval-module) {
-    relto = import ./relto.nix;
+  machines = {
+    relto = ./relto.nix;
   };
 
-  systems = lib.mapAttrs (name: config: config.config.system.build.toplevel) configs;
+  nixos = import ../nixpkgs/nixos;
 
-in {
-  larsnet = {
-    inherit configs systems;
-  } // systems;
-}
+  machine = name: configuration: nixos { inherit configuration; };
+
+in builtins.mapAttrs machine machines
