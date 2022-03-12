@@ -4,7 +4,7 @@ export HISTCONTROL=ignoreboth
 export HISTFILESIZE=1048576
 export HISTSIZE=1048576
 export NIX_PATH=nixpkgs=$HOME/cfg/nixpkgs
-export NIXOS_MACHINES=$HOME/c/dev
+export NIXOS_MACHINES=$HOME/cfg/dev
 
 alias cp='cp -i --reflink=auto'
 alias dd='tisdone dd status=progress'
