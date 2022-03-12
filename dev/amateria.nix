@@ -123,41 +123,6 @@
 
   services.udev.extraRules = lib.concatStringsSep "\n"
     (map (lib.concatStringsSep ", ") [
-      [ # ST-LINK
-        ''ATTRS{idVendor}=="0483"''
-        ''ATTRS{idProduct}=="3748"''
-        ''GROUP="dialout"''
-      ]
-      [ # ST-LINK
-        ''ATTRS{idVendor}=="0483"''
-        ''ATTRS{idProduct}=="374b"''
-        ''GROUP="dialout"''
-      ]
-      [ # SaleAE
-        ''ATTRS{idVendor}=="21a9"''
-        ''ATTRS{idProduct}=="1003"''
-        ''GROUP="dialout"''
-      ]
-      [ # TwinTrac
-        ''ATTRS{idVendor}=="0b6a"''
-        ''ATTRS{idProduct}=="38a4"''
-        ''GROUP="dialout"''
-      ]
-      [ # TwinTrac
-        ''ATTRS{idVendor}=="10c4"''
-        ''ATTRS{idProduct}=="ea60"''
-        ''GROUP="dialout"''
-      ]
-      [ # SEGGER
-        ''ATTRS{idVendor}=="1366"''
-        ''ATTRS{idProduct}=="1055"''
-        ''GROUP="dialout"''
-      ]
-      [ # PicoScope 2000
-        ''ATTRS{idVendor}=="0ce9"''
-        # idProduct varies
-        ''GROUP="dialout"''
-      ]
       [ # EdgeTPU
         ''ATTRS{idVendor}=="1a6e"''
         ''ATTRS{idProduct}=="089a"''
