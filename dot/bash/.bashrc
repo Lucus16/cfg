@@ -1,13 +1,3 @@
-export EDITOR=nvim
-export GOPROXY=direct
-export HISTCONTROL=ignoreboth
-export HISTFILESIZE=1048576
-export HISTSIZE=1048576
-export MANWIDTH=80
-export NIX_PATH=nixpkgs=$HOME/cfg/nixpkgs
-export NIXOS_MACHINES=$HOME/cfg/dev
-export PAGER='less -FX'
-
 alias cp='cp -i --reflink=auto'
 alias dd='tisdone dd status=progress'
 alias e='nvim'
@@ -22,7 +12,7 @@ alias mit-scheme='rlwrap mit-scheme'
 alias mupdf='mupdf-x11'
 alias mv='mv -i'
 alias nix-build='tisdone nix-build'
-alias py='python'
+alias py='python3'
 alias rg='rg -S'
 alias rsync='tisdone rsync --progress'
 alias tclsh='rlwrap tclsh'
