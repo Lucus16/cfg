@@ -1,3 +1,8 @@
+if [ -r .config/bash/environment -a -z "$__USER_ENVIRONMENT_SET" ]; then
+  source .config/bash/environment
+  export __USER_ENVIRONMENT_SET=1
+fi
+
 alias cp='cp -i --reflink=auto'
 alias dd='tisdone dd status=progress'
 alias e='nvim'
