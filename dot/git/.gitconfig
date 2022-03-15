@@ -1,5 +1,6 @@
 [alias]
 	amend = commit --amend
+	autosquash = rebase -i --autosquash
 	cat = cat-file -p
 	ff = merge --ff-only
 	fixup = commit --fixup

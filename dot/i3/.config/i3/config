@@ -20,6 +20,7 @@ bindsym $mod+Shift+e exit
 
 bindsym $mod+Return exec st
 bindsym $mod+d exec dmenu_run
+bindsym $mod+shift+s exec passmenu --type
 
 bindsym $mod+j focus left
 bindsym $mod+k focus down
