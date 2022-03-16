@@ -2,7 +2,7 @@
 
 {
   nix.settings = {
-    netrc-file = ../secrets/lumiguide/nix-netrc;
+    netrc-file = "${../secrets/lumiguide/nix-netrc}";
     substituters = [ "https://cache.lumi.guide" ];
     trusted-substituters = [ "https://cache.lumi.guide" ];
     trusted-users = [ "lumi" ];
@@ -10,12 +10,8 @@
       [ "cache.lumi.guide-1:z813xH+DDlh+wvloqEiihGvZqLXFmN7zmyF8wR47BHE=" ];
   };
 
-  nix.extraOptions = ''
-    netrc-file = ${../secrets/lumiguide/nix-netrc}
-  '';
-
   users.users.lumi = {
-    extraGroups = [ "adbusers" "dialout" "kvm" ];
+    extraGroups = [ "adbusers" "dialout" "kvm" "systemd-journal" ];
     isNormalUser = true;
     openssh.authorizedKeys.keyFiles = [ ../dot/ssh/.ssh/authorized_keys ];
   };
@@ -34,6 +30,7 @@
     peers = [{
       allowedIPs = [ "10.96.0.0/12" "10.0.0.0/17" ];
       endpoint = "wg.lumi.guide:31727";
+      persistentKeepalive = 24;
       publicKey = "6demp+PX2XyVoMovDj4xHQ2ZHKoj4QAF8maWpjcyzzI=";
     }];
   };
