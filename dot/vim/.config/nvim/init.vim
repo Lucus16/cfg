@@ -42,9 +42,9 @@ let g:zig_fmt_autosave = 0
 
 " LANGUAGE SERVERS
 
-au FileType haskell lua require'lspconfig'.hls.setup{}
-au FileType rust    lua require'lspconfig'.rust_analyzer.setup{}
-au FileType zig     lua require'lspconfig'.zls.setup{}
+lua require'lspconfig'.hls.setup{}
+lua require'lspconfig'.rust_analyzer.setup{}
+lua require'lspconfig'.zls.setup{}
 
 lua << EOF
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
