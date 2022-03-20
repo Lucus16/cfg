@@ -55,8 +55,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 EOF
 
-nmap <F2> :lua vim.lsp.diagnostic.goto_next()<CR>
+nmap <F2> :lua vim.diagnostic.goto_next()<CR>
 nmap <F3> :lua vim.lsp.buf.hover()<CR>
 nmap <Space>la :lua vim.lsp.buf.code_action()<CR>
-nmap <Space>ln :lua vim.lsp.diagnostic.goto_next()<CR>
+nmap <Space>ln :lua vim.diagnostic.goto_next()<CR>
 nmap <Space>lf :lua vim.lsp.buf.formatting()<CR>
