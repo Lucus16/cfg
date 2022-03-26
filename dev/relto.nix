@@ -99,6 +99,9 @@ in {
         } {
           allowedIPs = [ "172.27.0.5" ];
           publicKey = "kzlM5gXXaI9sl2TTnb14OY+qmFDc4aP89V/ITzcGhj4=";
+        } {
+          allowedIPs = [ "172.27.0.6" ];
+          publicKey = "Nd/H8vMQ/9kB31xWJncZwKmOejLb8qTNbkubhA2N4VA=";
         }];
       };
     };
@@ -106,12 +109,14 @@ in {
 
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 180d";
-  nix.maxJobs = 2;
+  nix.settings.cores = 2;
+  nix.settings.max-jobs = 2;
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.localSystem = lib.systems.examples.gnu64;
 
   programs.ssh.knownHosts."spire" = {
-    hostNames = [ "ch-s012.rsync.net" ];
+    extraHostNames = [ "ch-s012.rsync.net" ];
     publicKey =
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO5lfML3qjBiDXi4yh3xPoXPHqIOeLNp66P3Unrl+8g3";
   };
@@ -130,8 +135,6 @@ in {
     };
   };
 
-  services.fstrim.enable = true;
-
   services.postgresql = {
     enable = true;
     settings.listen_addresses = lib.mkForce "localhost,172.27.0.1";
@@ -139,7 +142,7 @@ in {
     ensureDatabases = postgresUsers;
     ensureUsers = map (name: {
       inherit name;
-      ensurePermissions = { "DATABASE ${name}" = "ALL PRIVILEGES"; };
+      ensurePermissions."DATABASE ${name}" = "ALL PRIVILEGES";
     }) postgresUsers;
     authentication = ''
       host lars,u16 lars 172.27.0.2/32 trust

@@ -15,7 +15,6 @@
   nix.package = pkgs.nix_2_3;
 
   nixpkgs.overlays = [ (import ../pkgs) ];
-  nixpkgs.pkgs = import ../nixpkgs { };
 
   services.openssh = {
     enable = true;

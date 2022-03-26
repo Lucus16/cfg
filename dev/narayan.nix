@@ -50,11 +50,24 @@
     };
   };
 
+  nix.buildMachines = [
+    {
+      hostName = "amateria";
+      system = "x86_64-linux";
+      maxJobs = 16;
+      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+      mandatoryFeatures = [ ];
+    }
+  ];
+
+  nix.distributedBuilds = true;
+  nix.settings.builders-use-substitutes = true;
   nix.settings.cores = 8;
   nix.settings.max-jobs = 8;
   nix.settings.trusted-users = [ "lars" "root" ];
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
 
   powerManagement.cpuFreqGovernor = "ondemand";
 

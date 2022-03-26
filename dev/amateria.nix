@@ -98,6 +98,7 @@
   nix.settings.trusted-users = [ "lars" "root" ];
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.localSystem = lib.systems.examples.gnu64;
 
   powerManagement.cpuFreqGovernor = "ondemand";
 
