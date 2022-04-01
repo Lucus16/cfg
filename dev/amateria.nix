@@ -58,7 +58,6 @@
 
   # Vulkan support
   hardware.opengl.driSupport = true;
-  hardware.opengl.extraPackages = with pkgs; [ amdvlk ];
 
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.extraConfig = ''
