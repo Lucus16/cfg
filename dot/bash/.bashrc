@@ -5,7 +5,7 @@ fi
 
 alias cp='cp -i --reflink=auto'
 alias dd='tisdone dd status=progress'
-alias e='nvim'
+alias e='nvim -p'
 alias grep='grep --color=auto'
 alias htop='htop -d20'
 alias ip6='ip -6'
@@ -21,7 +21,7 @@ alias py='python3'
 alias rg='rg -S'
 alias rsync='tisdone rsync --progress'
 alias tclsh='rlwrap tclsh'
-alias vim='nvim'
+alias vim='nvim -p'
 alias watch='watch --color'
 
 function enter {
