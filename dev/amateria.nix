@@ -61,6 +61,9 @@
   hardware.opengl.extraPackages = with pkgs; [ amdvlk ];
 
   hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.extraConfig = ''
+    unload-module module-suspend-on-idle
+  '';
 
   networking.dhcpcd.extraConfig = "noarp"; # Speed up DHCP from 5s to 1s.
   networking.hostName = "amateria";
