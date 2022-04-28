@@ -15,10 +15,16 @@ let
     repo = "${spire}:borg";
   };
 
+  simple-nixos-mailserver = builtins.fetchTarball {
+    url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/4ce864f52ae7e1733582a32d66c1f94ee11a52c8/nixos-mailserver-4ce864f52ae7e1733582a32d66c1f94ee11a52c8.tar.gz";
+    sha256 = "0qldiyf4y481g4n31kyc9x4541ajmwx6sza21nfkqipjh1dyc8bf";
+  };
+
 in {
   imports = [
     ./common.nix
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
+    simple-nixos-mailserver
   ];
 
   boot.initrd.availableKernelModules =
@@ -42,10 +48,30 @@ in {
     gateway = [ "fe80::1" ];
   };
 
+  documentation.nixos.enable = false;
+
+  mailserver = {
+    enable = true;
+    certificateScheme = 3; # Use Let's Encrypt
+    fqdn = "relto.u16.nl";
+    domains = [ "u16.nl" ];
+    loginAccounts."lars@u16.nl" = {
+      hashedPassword = "$2y$05$KEryliesLyehI7i2dJudNOfYuX3UjUkrxv5WaDd96Q8XFAbwMqQHC";
+      catchAll = [ "u16.nl" ]; # Receive from all addresses
+      aliases = [ "@u16.nl" ]; # Send from all addresses
+    };
+  };
+
   networking.firewall = {
     interfaces.ens3.allowedTCPPorts = lib.mkForce [
       22 # ssh
+      25 # smtp
       80 # http
+      143 # imap starttls
+      443 # https
+      465 # smtp tls
+      587 # smtp starttls
+      993 # imap tls
       4242 # quassel
     ];
 
