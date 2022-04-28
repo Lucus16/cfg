@@ -4,11 +4,10 @@
   imports = [ ../nixos-m1/nix/m1-support ./common.nix ];
 
   # Does not work yet
-  #boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
+  boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
   boot.initrd.availableKernelModules = [ "usb_storage" ];
   boot.kernelBuildIsCross = false;
-  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
 
   fileSystems."/" = {
