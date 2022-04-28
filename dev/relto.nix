@@ -159,6 +159,11 @@ in {
           ${config.services.postgresql.package}/bin/pg_dump > /tmp/quassel.psql
       '';
     };
+
+    mail = common-borg-options // {
+      paths = "/var/vmail";
+      startAt = "*-*-* 04:00:00";
+    };
   };
 
   services.postgresql = {
