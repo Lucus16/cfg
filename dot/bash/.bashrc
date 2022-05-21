@@ -33,3 +33,7 @@ function enter {
 function rest {
   i3-msg exec -- st -d "$PWD" >/dev/null
 }
+
+function dims {
+  echo "$(tput cols)x$(tput lines)"
+}
