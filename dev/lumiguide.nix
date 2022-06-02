@@ -28,7 +28,7 @@
     privateKeyFile = "/etc/wireguard/lumiguide.secret";
     postSetup = "ip link set mtu 1360 dev lumiguide";
     peers = [{
-      allowedIPs = [ "10.96.0.0/12" "10.0.0.0/17" "172.31.8.0/21" ];
+      allowedIPs = [ "10.96.0.0/12" "10.0.0.0/16" "172.31.8.0/21" ];
       endpoint = "wg.lumi.guide:31727";
       persistentKeepalive = 24;
       publicKey = "6demp+PX2XyVoMovDj4xHQ2ZHKoj4QAF8maWpjcyzzI=";
