@@ -11,6 +11,8 @@
     ripgrep
   ];
 
+  nix.settings.experimental-features = "nix-command";
+
   nixpkgs.overlays = [ (import ../pkgs) ];
 
   services.openssh = {
