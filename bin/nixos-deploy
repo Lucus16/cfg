@@ -68,10 +68,10 @@ if [ -z "$machine" ]; then
 fi
 
 if [ -z "$target" ]; then
-  target="$machine"
+  target="root@$machine"
 fi
 
-atTarget="ssh -l root $target"
+atTarget="ssh $target"
 
 case "$action" in
   boot|copy|switch|test)
