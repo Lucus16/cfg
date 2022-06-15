@@ -118,12 +118,6 @@
   # YubiKey
   services.pcscd.enable = true;
 
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql_10;
-    dataDir = "/var/lib/postgresql";
-  };
-
   services.udev.extraRules = lib.concatStringsSep "\n"
     (map (lib.concatStringsSep ", ") [
       [ # EdgeTPU
