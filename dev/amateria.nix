@@ -135,14 +135,11 @@
   services.unclutter-xfixes.enable = true;
 
   services.xserver = {
-    autoRepeatDelay = 250;
-    autoRepeatInterval = 25;
     dpi = 144;
     enable = true;
     videoDrivers = [ "modesetting" ];
     wacom.enable = true;
     windowManager.i3.enable = true;
-    xkbOptions = "caps:escape";
     xautolock = {
       enable = true;
       locker = "/run/wrappers/bin/slock";

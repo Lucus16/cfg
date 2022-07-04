@@ -21,7 +21,12 @@
     kbdInteractiveAuthentication = false;
   };
 
-  services.xserver.displayManager.job.logToJournal = false;
+  services.xserver = {
+    autoRepeatDelay = 250;
+    autoRepeatInterval = 25;
+    displayManager.job.logToJournal = false;
+    xkbOptions = "caps:escape";
+  };
 
   time.timeZone = "Europe/Amsterdam";
 
