@@ -44,6 +44,7 @@
   };
 
   hardware.cpu.intel.updateMicrocode = true;
+  hardware.enableRedistributableFirmware = true;
   hardware.pulseaudio.enable = true;
 
   i18n = {
