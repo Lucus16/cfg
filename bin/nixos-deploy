@@ -5,7 +5,7 @@ shopt -s inherit_errexit
 
 profile="/nix/var/nix/profiles/system"
 
-unset action machine system target
+unset action dryrun machine system target verbose
 
 while [ $# -gt 0 ]; do
   i="$1"; shift 1
@@ -15,6 +15,8 @@ while [ $# -gt 0 ]; do
       echo '  -f, --file     Nix file to find machine attribute in.'
       echo '  -p, --profile  Path to the profile to update.'
       echo '  -t, --target   SSH hostname to update.'
+      echo '  -v, --verbose  Log executed commands.'
+      echo '  -n, --dry-run  Show commands that would be executed.'
       exit
       ;;
     --profile|-p)
@@ -40,6 +42,13 @@ while [ $# -gt 0 ]; do
       fi
       NIXOS_MACHINES="$1"
       shift 1
+      ;;
+    --verbose|-v)
+      verbose=1
+      ;;
+    --dry-run|-n)
+      dryrun=1
+      verbose=1
       ;;
     -*)
       echo "$0: unknown option '$i'" >&2
@@ -71,25 +80,38 @@ if [ -z "$target" ]; then
   target="root@$machine"
 fi
 
+function andlog {
+  test -z "$verbose" || echo \$ "$@" 1>&2
+  "$@"
+}
+
+function dryexec {
+  test -z "$verbose" || echo \$ "$@" 1>&2
+  test -n "$dryrun" || "$@"
+}
+
 atTarget="ssh $target"
 
 case "$action" in
   boot|copy|switch|test)
-    system=$(nix-build --no-out-link "$NIXOS_MACHINES" -A "$machine.system")
-    nix-copy-closure --use-substitutes --to "$target" "$system"
+    system=$(dryexec nix-build --no-out-link "$NIXOS_MACHINES" -A "$machine.system")
+    test -z "$dryrun" || system=$(nix-instantiate --eval "$NIXOS_MACHINES" -A "$machine.system.outPath")
+    test -z "$verbose" || echo "system=$system"
+    dryexec nix-copy-closure --use-substitutes --to "$target" "$system"
     ;;
   vm)
-    system=$(nix-build --no-out-link "$NIXOS_MACHINES" -A "$machine.vm")
-    echo "$ ls $system/bin" >&2
-    ls "$system/bin"
+    system=$(dryexec nix-build --no-out-link "$NIXOS_MACHINES" -A "$machine.vm")
+    test -z "$dryrun" || system=$(nix-instantiate --eval "$NIXOS_MACHINES" -A "$machine.vm.outPath")
+    test -z "$verbose" || echo "system=$system"
+    dryexec ls "$system/bin"
     exit 0
     ;;
   build)
-    nix-build --no-out-link "$NIXOS_MACHINES" -A "$machine.system"
+    dryexec nix-build --no-out-link "$NIXOS_MACHINES" -A "$machine.system"
     exit 0
     ;;
   instantiate)
-    nix-instantiate "$NIXOS_MACHINES" -A "$machine.system"
+    dryexec nix-instantiate "$NIXOS_MACHINES" -A "$machine.system"
     exit 0
     ;;
   *)
@@ -100,12 +122,12 @@ esac
 
 case "$action" in
   boot|switch)
-    $atTarget nix-env -p "$profile" --set "$system"
+    dryexec $atTarget nix-env -p "$profile" --set "$system"
     ;;
 esac
 
 case "$action" in
   boot|switch|test)
-    $atTarget "$system/bin/switch-to-configuration" "$action"
+    dryexec $atTarget "$system/bin/switch-to-configuration" "$action"
     ;;
 esac
