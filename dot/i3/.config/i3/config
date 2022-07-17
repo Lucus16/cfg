@@ -87,6 +87,8 @@ bindsym XF86AudioRaiseVolume exec amixer set Master 5%+
 bindsym XF86AudioLowerVolume exec amixer set Master 5%-
 bindsym XF86AudioMute exec amixer set Master toggle
 
+bindsym $mod+F2 exec next-sink
+
 bar {
     status_command i3status
     mode hide

@@ -15,6 +15,8 @@ let
 in {
   nixos-deploy = self.writeShellScriptBin "nixos-deploy"
     (builtins.readFile ../bin/nixos-deploy);
+  next-sink = self.writeShellScriptBin "next-sink"
+    (builtins.readFile ../bin/next-sink);
   pwgen = writePythonBin "pwgen" ../bin/pwgen;
   st = import ./st.nix { inherit (super) fetchFromGitHub st; };
   tisdone = self.callPackage ./tisdone.nix { };

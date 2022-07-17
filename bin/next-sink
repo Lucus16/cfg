@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -x
+
+newSink=$({ pactl list short sinks; pactl list short sinks; } \
+  | grep -A1 $(pactl get-default-sink) | head -2 | tail -1 | cut -f2)
+pactl set-default-sink $newSink
