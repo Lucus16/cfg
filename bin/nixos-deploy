@@ -7,42 +7,48 @@ profile="/nix/var/nix/profiles/system"
 
 unset action dryrun machine jobs system target verbose
 
+function usage {
+    echo 'nixos ACTION [ MACHINE ]'
+    echo '  -f, --file     Nix file to find machine attribute in.'
+    echo '  -p, --profile  Path to the profile to update.'
+    echo '  -t, --target   SSH hostname to update.'
+    echo '  -v, --verbose  Log executed commands.'
+    echo '  -n, --dry-run  Show commands that would be executed.'
+    echo '  -j, --jobs     Number of simultaneous jobs to use when building.'
+    exit 1
+}
+
+options=$(getopt    \
+  -o h  -l help     \
+  -o f: -l file:    \
+  -o p: -l profile: \
+  -o t: -l target:  \
+  -o v  -l verbose  \
+  -o n  -l dry-run  \
+  -o j: -l jobs:    \
+  -- "$@")
+
+test $? -eq 0 || usage
+
+eval set -- "$options"
+
 while [ $# -gt 0 ]; do
   i="$1"; shift 1
   case "$i" in
     --help|-h)
-      echo 'nixos ACTION [ MACHINE ]'
-      echo '  -f, --file     Nix file to find machine attribute in.'
-      echo '  -p, --profile  Path to the profile to update.'
-      echo '  -t, --target   SSH hostname to update.'
-      echo '  -v, --verbose  Log executed commands.'
-      echo '  -n, --dry-run  Show commands that would be executed.'
-      echo '  -j, --jobs     Number of simultaneous jobs to use when building.'
-      exit
+      usage
       ;;
     --profile|-p)
-      if [ "$#" -eq 0 ]; then
-        echo "$0: $i requires an argument" >&2
-        exit 1
-      fi
       profile="$1"
-      shift 1
+      shift
       ;;
     --target|-t)
-      if [ "$#" -eq 0 ]; then
-        echo "$0: $i requires an argument" >&2
-        exit 1
-      fi
       target="$1"
-      shift 1
+      shift
       ;;
     --file|-f)
-      if [ "$#" -eq 0 ]; then
-        echo "$0: $i requires an argument" >&2
-        exit 1
-      fi
       NIXOS_MACHINES="$1"
-      shift 1
+      shift
       ;;
     --verbose|-v)
       verbose=1
@@ -52,29 +58,21 @@ while [ $# -gt 0 ]; do
       verbose=1
       ;;
     --jobs|-j)
-      if [ "$#" -eq 0 ]; then
-        echo "$0: $i requires an argument" >&2
-        exit 1
-      fi
-      jobs="-j $1"
-      shift 1
+      jobs="-j$1"
+      shift
       ;;
-    -*)
-      echo "$0: unknown option '$i'" >&2
-      exit 1
-      ;;
-    *)
-      if [ -z "$action" ]; then
-        action="$i"
-      elif [ -z "$machine" ]; then
-        machine="$i"
-      else
-        echo "$0: unknown option '$i'" >&2
-        exit 1
-      fi
+    --)
+      break
       ;;
   esac
 done
+
+action="$1"
+machine="$2"
+
+if [ -n "$3" ]; then
+  echo "$0: Unsupported option: $3"
+fi
 
 if [ -z "$machine" -a -n "$target" ]; then
   echo "$0: Cannot set target without setting machine" >&2
