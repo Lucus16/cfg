@@ -5,7 +5,7 @@ shopt -s inherit_errexit
 
 profile="/nix/var/nix/profiles/system"
 
-unset action dryrun machine system target verbose
+unset action dryrun machine jobs system target verbose
 
 while [ $# -gt 0 ]; do
   i="$1"; shift 1
@@ -17,6 +17,7 @@ while [ $# -gt 0 ]; do
       echo '  -t, --target   SSH hostname to update.'
       echo '  -v, --verbose  Log executed commands.'
       echo '  -n, --dry-run  Show commands that would be executed.'
+      echo '  -j, --jobs     Number of simultaneous jobs to use when building.'
       exit
       ;;
     --profile|-p)
@@ -49,6 +50,14 @@ while [ $# -gt 0 ]; do
     --dry-run|-n)
       dryrun=1
       verbose=1
+      ;;
+    --jobs|-j)
+      if [ "$#" -eq 0 ]; then
+        echo "$0: $i requires an argument" >&2
+        exit 1
+      fi
+      jobs="-j $1"
+      shift 1
       ;;
     -*)
       echo "$0: unknown option '$i'" >&2
@@ -94,20 +103,20 @@ atTarget="ssh $target"
 
 case "$action" in
   boot|copy|switch|test)
-    system=$(dryexec nix-build --no-out-link "$NIXOS_MACHINES" -A "$machine.system")
+    system=$(dryexec nix-build $jobs --no-out-link "$NIXOS_MACHINES" -A "$machine.system")
     test -z "$dryrun" || system=$(nix-instantiate --eval "$NIXOS_MACHINES" -A "$machine.system.outPath")
     test -z "$verbose" || echo "system=$system"
     dryexec nix-copy-closure --use-substitutes --to "$target" "$system"
     ;;
   vm)
-    system=$(dryexec nix-build --no-out-link "$NIXOS_MACHINES" -A "$machine.vm")
+    system=$(dryexec nix-build $jobs --no-out-link "$NIXOS_MACHINES" -A "$machine.vm")
     test -z "$dryrun" || system=$(nix-instantiate --eval "$NIXOS_MACHINES" -A "$machine.vm.outPath")
     test -z "$verbose" || echo "system=$system"
     dryexec ls "$system/bin"
     exit 0
     ;;
   build)
-    dryexec nix-build --no-out-link "$NIXOS_MACHINES" -A "$machine.system"
+    dryexec nix-build $jobs --no-out-link "$NIXOS_MACHINES" -A "$machine.system"
     exit 0
     ;;
   instantiate)
