@@ -3,9 +3,6 @@
 {
   imports = [ ../nixos-m1/nix/m1-support ./common.nix ];
 
-  # Does not work yet
-  boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
-
   boot.initrd.availableKernelModules = [ "usb_storage" ];
   boot.kernelBuildIsCross = false;
   boot.loader.efi.canTouchEfiVariables = false;
@@ -21,6 +18,7 @@
   };
 
   hardware.enableRedistributableFirmware = false;
+  hardware.pulseaudio.enable = true;
 
   networking.dhcpcd.extraConfig = "noarp"; # Speed up DHCP from 5s to 1s.
   networking.hostName = "narayan";
@@ -67,8 +65,6 @@
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
-
-  powerManagement.cpuFreqGovernor = "ondemand";
 
   programs.gnupg.agent = {
     enable = true;
