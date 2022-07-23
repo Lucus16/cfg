@@ -77,6 +77,11 @@
 
   programs.slock.enable = true;
 
+  programs.xss-lock.enable = true;
+  programs.xss-lock.lockerCommand = "/run/wrappers/bin/slock";
+
+  services.logind.lidSwitch = "lock";
+
   # YubiKey
   services.pcscd.enable = true;
 
@@ -85,7 +90,6 @@
   services.xserver = {
     autoRepeatDelay = 250;
     autoRepeatInterval = 25;
-    displayManager.gdm.enable = true;
     dpi = 144;
     enable = true;
     libinput.enable = true;
@@ -96,11 +100,6 @@
     libinput.touchpad.tapping = false;
     windowManager.i3.enable = true;
     xkbOptions = "caps:escape";
-    xautolock = {
-      enable = true;
-      locker = "/run/wrappers/bin/slock";
-      time = 10; # minutes
-    };
   };
 
   systemd.user.services.libinput-gestures = let
