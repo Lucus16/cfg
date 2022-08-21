@@ -11,7 +11,7 @@
     ripgrep
   ];
 
-  nix.settings.experimental-features = "nix-command";
+  nix.settings.experimental-features = "flakes nix-command";
 
   nixpkgs.overlays = [ (import ../pkgs) ];
 
