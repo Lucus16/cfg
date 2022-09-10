@@ -14,14 +14,10 @@
 	tagdate = !git tag $(date -u +%Y%m%d.%H%M%S)
 	uncommit = reset HEAD^ --
 	unstage = reset HEAD --
-[commit]
-	gpgsign = true
 [core]
 	pager = less -FX
 [diff]
 	wordregex = "[a-zA-Z0-9]+|."
-[include]
-	sign = true
 [init]
 	defaultBranch = devel
 [merge]
