@@ -23,7 +23,7 @@
 [merge]
 	conflictstyle = diff3
 [pull]
-        ff = only
+	ff = only
 [push]
 	default = simple
 [user]
