@@ -42,6 +42,7 @@ let g:zig_fmt_autosave = 0
 
 " LANGUAGE SERVERS
 
+lua require'lspconfig'.gopls.setup{}
 lua require'lspconfig'.hls.setup{}
 lua require'lspconfig'.rust_analyzer.setup{}
 lua require'lspconfig'.zls.setup{}
