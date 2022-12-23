@@ -17,6 +17,7 @@
     fsType = "vfat";
   };
 
+  hardware.bluetooth.enable = true;
   hardware.enableRedistributableFirmware = false;
   hardware.pulseaudio.enable = true;
 
@@ -65,6 +66,8 @@
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
+
+  programs.geary.enable = true;
 
   programs.gnupg.agent = {
     enable = true;
