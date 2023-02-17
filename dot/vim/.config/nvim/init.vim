@@ -37,6 +37,8 @@ hi DiagnosticUnderlineError ctermbg=1
 hi DiagnosticUnderlineWarn  ctermbg=3
 hi DiagnosticUnderlineInfo  ctermbg=4
 hi DiagnosticUnderlineHint  ctermbg=4
+hi DiffAdd    ctermbg=22
+hi DiffDelete ctermbg=88
 
 let g:zig_fmt_autosave = 0
 
