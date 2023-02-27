@@ -158,6 +158,7 @@
   '';
 
   users.users.lars.extraGroups = [ "audio" "dialout" "wheel" ];
+  users.users.lucus.extraGroups = [ "audio" ];
 
   system.stateVersion = "19.09"; # DO NOT CHANGE
 }
