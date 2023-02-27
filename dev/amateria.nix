@@ -118,6 +118,9 @@
   # YubiKey
   services.pcscd.enable = true;
 
+  services.picom.enable = true;
+  services.picom.vSync = true;
+
   services.udev.extraRules = lib.concatStringsSep "\n"
     (map (lib.concatStringsSep ", ") [
       [ # EdgeTPU
