@@ -45,12 +45,13 @@ let g:zig_fmt_autosave = 0
 
 " LANGUAGE SERVERS
 
-lua require'lspconfig'.gopls.setup{}
-lua require'lspconfig'.hls.setup{}
-lua require'lspconfig'.rust_analyzer.setup{}
-lua require'lspconfig'.zls.setup{}
-
 lua << EOF
+
+require'lspconfig'.gopls.setup{}
+require'lspconfig'.hls.setup{}
+require'lspconfig'.rust_analyzer.setup{}
+require'lspconfig'.zls.setup{}
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = false,
