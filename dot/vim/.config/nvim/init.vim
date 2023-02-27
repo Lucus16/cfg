@@ -2,6 +2,7 @@ filetype plugin indent on
 syntax enable
 set bg=dark tw=80 so=3 et nohls nojs title hidden
 set ignorecase smartcase
+set clipboard+=unnamedplus " Use system clipboard
 
 nmap <Space>bb <C-^>
 nmap <Space>fb :Buffers<CR>
