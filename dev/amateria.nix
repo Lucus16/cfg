@@ -56,8 +56,13 @@
   hardware.cpu.amd.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
 
-  # Vulkan support
-  hardware.opengl.driSupport = true;
+  # Vulkan and steam support
+  hardware = {
+    opengl.enable = true;
+    opengl.driSupport = true;
+    opengl.driSupport32Bit = true;
+    pulseaudio.support32Bit = true;
+  };
 
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.extraConfig = ''
