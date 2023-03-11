@@ -1,5 +1,5 @@
 *.qcow2
-/nixos-m1
+/nixos-apple-silicon
 /nixpkgs
 /secrets
 result*

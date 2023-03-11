@@ -1,10 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [ ../nixos-m1/nix/m1-support ./common.nix ];
+  imports = [ ../nixos-apple-silicon/apple-silicon-support ./common.nix ];
 
   boot.initrd.availableKernelModules = [ "usb_storage" ];
-  boot.kernelBuildIsCross = false;
   boot.loader.efi.canTouchEfiVariables = false;
 
   fileSystems."/" = {
