@@ -110,6 +110,7 @@
   powerManagement.cpuFreqGovernor = "ondemand";
 
   programs.adb.enable = true;
+  programs.corectrl.enable = true;
 
   programs.gnupg.agent = {
     enable = true;
