@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  boot.cleanTmpDir = true;
+  boot.tmp.cleanOnBoot = true;
 
   environment.systemPackages = with pkgs; [
     gitMinimal
