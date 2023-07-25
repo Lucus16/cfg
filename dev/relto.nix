@@ -52,6 +52,11 @@ in {
 
   mailserver = {
     enable = true;
+    certificateDomains = [
+      "imap.u16.nl"
+      "mail.u16.nl"
+      "smtp.u16.nl"
+    ];
     certificateScheme = "acme-nginx";
     fqdn = "relto.u16.nl";
     domains = [ "u16.nl" ];
