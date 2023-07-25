@@ -63,6 +63,7 @@ in {
       catchAll = [ "u16.nl" ]; # Receive from all addresses
       aliases = [ "@u16.nl" ]; # Send from all addresses
     };
+    fullTextSearch.enable = true;
   };
 
   networking.firewall = {
