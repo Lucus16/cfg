@@ -16,7 +16,8 @@ let
   };
 
   simple-nixos-mailserver = builtins.fetchTarball {
-    url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/c63f6e7b053c18325194ff0e274dba44e8d2271e/nixos-mailserver-c63f6e7b053c18325194ff0e274dba44e8d2271e.tar.gz";
+    url =
+      "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/c63f6e7b053c18325194ff0e274dba44e8d2271e/nixos-mailserver-c63f6e7b053c18325194ff0e274dba44e8d2271e.tar.gz";
     sha256 = "056vyjyzw4fi3y4jnzc5h6i5awg5klaxkhb77vrsg4i1qbg6lqmr";
   };
 
@@ -38,7 +39,7 @@ in {
   };
 
   services.nscd.enable = false;
-  system.nssModules = lib.mkForce [];
+  system.nssModules = lib.mkForce [ ];
   networking.dhcpcd.enable = false;
   systemd.network.enable = true;
   systemd.network.networks."40-hetzner" = {
@@ -52,16 +53,13 @@ in {
 
   mailserver = {
     enable = true;
-    certificateDomains = [
-      "imap.u16.nl"
-      "mail.u16.nl"
-      "smtp.u16.nl"
-    ];
+    certificateDomains = [ "imap.u16.nl" "mail.u16.nl" "smtp.u16.nl" ];
     certificateScheme = "acme-nginx";
     fqdn = "relto.u16.nl";
     domains = [ "u16.nl" ];
     loginAccounts."lars@u16.nl" = {
-      hashedPassword = "$2y$05$KEryliesLyehI7i2dJudNOfYuX3UjUkrxv5WaDd96Q8XFAbwMqQHC";
+      hashedPassword =
+        "$2y$05$KEryliesLyehI7i2dJudNOfYuX3UjUkrxv5WaDd96Q8XFAbwMqQHC";
       catchAll = [ "u16.nl" ]; # Receive from all addresses
       aliases = [ "@u16.nl" ]; # Send from all addresses
     };
@@ -111,23 +109,21 @@ in {
 
   networking.wireguard = {
     enable = true;
-    interfaces = {
-      "larsnet" = {
-        generatePrivateKeyFile = true;
-        ips = [ "172.27.0.1/16" ];
-        listenPort = 5353;
-        privateKeyFile = "/etc/wireguard/larsnet.secret";
-        postSetup = "ip link set mtu 1360 dev larsnet";
-        peers = lib.attrValues {
-          channelwood.allowedIPs = [ "172.27.0.2" ];
-          channelwood.publicKey = "iJSsDmyHbcFCe9GAtOE40BNUSGy1D6aCjsQUis9wjAU=";
-          amateria.allowedIPs = [ "172.27.0.4" ];
-          amateria.publicKey = "lmL6nSdE3eP3R7KwHi7N4+Iaj2k6Qh9rNWigxYgD8CI=";
-          edanna.allowedIPs = [ "172.27.0.5" ];
-          edanna.publicKey = "kzlM5gXXaI9sl2TTnb14OY+qmFDc4aP89V/ITzcGhj4=";
-          narayan.allowedIPs = [ "172.27.0.6" ];
-          narayan.publicKey = "Nd/H8vMQ/9kB31xWJncZwKmOejLb8qTNbkubhA2N4VA=";
-        };
+    interfaces.larsnet = {
+      generatePrivateKeyFile = true;
+      ips = [ "172.27.0.1/16" ];
+      listenPort = 5353;
+      privateKeyFile = "/etc/wireguard/larsnet.secret";
+      postSetup = "ip link set mtu 1360 dev larsnet";
+      peers = lib.attrValues {
+        channelwood.allowedIPs = [ "172.27.0.2" ];
+        channelwood.publicKey = "iJSsDmyHbcFCe9GAtOE40BNUSGy1D6aCjsQUis9wjAU=";
+        amateria.allowedIPs = [ "172.27.0.4" ];
+        amateria.publicKey = "lmL6nSdE3eP3R7KwHi7N4+Iaj2k6Qh9rNWigxYgD8CI=";
+        edanna.allowedIPs = [ "172.27.0.5" ];
+        edanna.publicKey = "kzlM5gXXaI9sl2TTnb14OY+qmFDc4aP89V/ITzcGhj4=";
+        narayan.allowedIPs = [ "172.27.0.6" ];
+        narayan.publicKey = "Nd/H8vMQ/9kB31xWJncZwKmOejLb8qTNbkubhA2N4VA=";
       };
     };
   };
@@ -140,7 +136,7 @@ in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.localSystem = lib.systems.examples.gnu64;
 
-  programs.ssh.knownHosts."spire" = {
+  programs.ssh.knownHosts.spire = {
     extraHostNames = [ "ch-s012.rsync.net" ];
     publicKey =
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO5lfML3qjBiDXi4yh3xPoXPHqIOeLNp66P3Unrl+8g3";
