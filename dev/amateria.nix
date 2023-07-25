@@ -91,7 +91,7 @@
         postSetup = "ip link set mtu 1360 dev larsnet";
         peers = [{
           allowedIPs = [ "172.27.0.0/16" ];
-          endpoint = "4.u16.nl:5353";
+          endpoint = "4.u16.nl:30567";
           persistentKeepalive = 24;
           publicKey = "d1JVe9OQEwocZjuYCr4uVlTV9lURCaGklf/nYYsC204=";
         }];
