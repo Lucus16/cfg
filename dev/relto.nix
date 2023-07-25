@@ -81,8 +81,7 @@ in {
     interfaces.ens3.allowedTCPPortRanges = lib.mkForce [ ];
     interfaces.ens3.allowedUDPPorts = lib.mkForce [
       53 # wireguard
-      443 # wireguard
-      5353 # wireguard
+      30567 # wireguard
     ];
 
     interfaces.ens3.allowedUDPPortRanges = lib.mkForce [ ];
@@ -92,10 +91,11 @@ in {
     ];
 
     extraCommands = ''
-      # Forward port 53 and 443 on the ens3 interface to wireguard
-      ip46tables -w -t nat -F PREROUTING
-      ip46tables -w -t nat -A PREROUTING -p udp -i ens3 --dport 53 -j REDIRECT --to-ports 5353
-      ip46tables -w -t nat -A PREROUTING -p udp -i ens3 --dport 443 -j REDIRECT --to-ports 5353
+      ip46tables -w -t nat -A PREROUTING -p udp -i ens3 --dport 53 -j REDIRECT --to-ports 30567
+    '';
+
+    extraStopCommands = ''
+      ip46tables -w -t nat -D PREROUTING -p udp -i ens3 --dport 53 -j REDIRECT --to-ports 30567
     '';
 
     logRefusedConnections = false;
@@ -112,7 +112,7 @@ in {
     interfaces.larsnet = {
       generatePrivateKeyFile = true;
       ips = [ "172.27.0.1/16" ];
-      listenPort = 5353;
+      listenPort = 30567;
       privateKeyFile = "/etc/wireguard/larsnet.secret";
       postSetup = "ip link set mtu 1360 dev larsnet";
       peers = lib.attrValues {
