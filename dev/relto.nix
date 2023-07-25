@@ -116,8 +116,6 @@ in {
       privateKeyFile = "/etc/wireguard/larsnet.secret";
       postSetup = "ip link set mtu 1360 dev larsnet";
       peers = lib.attrValues {
-        channelwood.allowedIPs = [ "172.27.0.2" ];
-        channelwood.publicKey = "iJSsDmyHbcFCe9GAtOE40BNUSGy1D6aCjsQUis9wjAU=";
         amateria.allowedIPs = [ "172.27.0.4" ];
         amateria.publicKey = "lmL6nSdE3eP3R7KwHi7N4+Iaj2k6Qh9rNWigxYgD8CI=";
         edanna.allowedIPs = [ "172.27.0.5" ];

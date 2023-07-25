@@ -1,7 +1,6 @@
 let
   machines = {
     amateria = ./amateria.nix;
-    channelwood = ./channelwood.nix;
     narayan = ./narayan.nix;
     relto = ./relto.nix;
   };

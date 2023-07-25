@@ -22,7 +22,6 @@
     ips = [
       {
         amateria = "10.109.0.23";
-        channelwood = "10.109.0.24";
       }.${config.networking.hostName}
     ];
     privateKeyFile = "/etc/wireguard/lumiguide.secret";
