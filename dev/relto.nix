@@ -118,22 +118,16 @@ in {
         listenPort = 5353;
         privateKeyFile = "/etc/wireguard/larsnet.secret";
         postSetup = "ip link set mtu 1360 dev larsnet";
-        peers = [{
-          allowedIPs = [ "172.27.0.2" ];
-          publicKey = "iJSsDmyHbcFCe9GAtOE40BNUSGy1D6aCjsQUis9wjAU=";
-        } {
-          allowedIPs = [ "172.27.0.3" ];
-          publicKey = "2Mk2D6U06GOogssi0eF8MV125xA4p/6G2kapSH5Ij1U=";
-        } {
-          allowedIPs = [ "172.27.0.4" ];
-          publicKey = "lmL6nSdE3eP3R7KwHi7N4+Iaj2k6Qh9rNWigxYgD8CI=";
-        } {
-          allowedIPs = [ "172.27.0.5" ];
-          publicKey = "kzlM5gXXaI9sl2TTnb14OY+qmFDc4aP89V/ITzcGhj4=";
-        } {
-          allowedIPs = [ "172.27.0.6" ];
-          publicKey = "Nd/H8vMQ/9kB31xWJncZwKmOejLb8qTNbkubhA2N4VA=";
-        }];
+        peers = lib.attrValues {
+          channelwood.allowedIPs = [ "172.27.0.2" ];
+          channelwood.publicKey = "iJSsDmyHbcFCe9GAtOE40BNUSGy1D6aCjsQUis9wjAU=";
+          amateria.allowedIPs = [ "172.27.0.4" ];
+          amateria.publicKey = "lmL6nSdE3eP3R7KwHi7N4+Iaj2k6Qh9rNWigxYgD8CI=";
+          edanna.allowedIPs = [ "172.27.0.5" ];
+          edanna.publicKey = "kzlM5gXXaI9sl2TTnb14OY+qmFDc4aP89V/ITzcGhj4=";
+          narayan.allowedIPs = [ "172.27.0.6" ];
+          narayan.publicKey = "Nd/H8vMQ/9kB31xWJncZwKmOejLb8qTNbkubhA2N4VA=";
+        };
       };
     };
   };
