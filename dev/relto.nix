@@ -16,8 +16,8 @@ let
   };
 
   simple-nixos-mailserver = builtins.fetchTarball {
-    url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/4ce864f52ae7e1733582a32d66c1f94ee11a52c8/nixos-mailserver-4ce864f52ae7e1733582a32d66c1f94ee11a52c8.tar.gz";
-    sha256 = "0qldiyf4y481g4n31kyc9x4541ajmwx6sza21nfkqipjh1dyc8bf";
+    url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/c63f6e7b053c18325194ff0e274dba44e8d2271e/nixos-mailserver-c63f6e7b053c18325194ff0e274dba44e8d2271e.tar.gz";
+    sha256 = "056vyjyzw4fi3y4jnzc5h6i5awg5klaxkhb77vrsg4i1qbg6lqmr";
   };
 
 in {
@@ -52,7 +52,7 @@ in {
 
   mailserver = {
     enable = true;
-    certificateScheme = 3; # Use Let's Encrypt
+    certificateScheme = "acme-nginx";
     fqdn = "relto.u16.nl";
     domains = [ "u16.nl" ];
     loginAccounts."lars@u16.nl" = {
