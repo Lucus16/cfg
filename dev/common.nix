@@ -7,6 +7,7 @@
     gitMinimal
     htop
     man-pages
+    ncdu
     neovim
     ripgrep
   ];
