@@ -111,6 +111,7 @@
 
   programs.adb.enable = true;
   programs.corectrl.enable = true;
+  programs.geary.enable = true;
 
   programs.gnupg.agent = {
     enable = true;
