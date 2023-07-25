@@ -5,6 +5,7 @@ fi
 
 alias cp='cp -i --reflink=auto'
 alias dd='tisdone dd status=progress'
+alias sudd='tisdone sudo dd status=progress'
 alias e='nvim -p'
 alias grep='grep --color=auto'
 alias htop='htop -d20'
