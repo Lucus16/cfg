@@ -16,9 +16,11 @@
     fsType = "vfat";
   };
 
+  hardware.asahi.addEdgeKernelConfig = true;
+  hardware.asahi.useExperimentalGPUDriver = true;
+
   hardware.bluetooth.enable = true;
   hardware.enableRedistributableFirmware = false;
-  hardware.pulseaudio.enable = true;
 
   networking.dhcpcd.extraConfig = "noarp"; # Speed up DHCP from 5s to 1s.
   networking.hostName = "narayan";
@@ -78,10 +80,23 @@
   programs.xss-lock.enable = true;
   programs.xss-lock.lockerCommand = "/run/wrappers/bin/slock";
 
-  services.logind.lidSwitch = "lock";
-
   # YubiKey
   services.pcscd.enable = true;
+
+  services.pipewire.enable = true;
+  services.pipewire.alsa.enable = true;
+  services.pipewire.jack.enable = true;
+  services.pipewire.pulse.enable = true;
+
+  services.udev.extraRules = lib.concatStringsSep "\n"
+    (map (lib.concatStringsSep ", ") [
+      [ # Don't charge battery past 80% in order to extend battery life.
+        ''SUBSYSTEM=="power_supply"''
+        ''KERNEL=="macsmc-battery"''
+        ''ATTR{charge_control_end_threshold}="80"''
+        ''ATTR{charge_control_start_threshold}="70"''
+      ]
+    ]);
 
   services.unclutter-xfixes.enable = true;
 
