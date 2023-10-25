@@ -41,6 +41,9 @@ hi DiagnosticUnderlineHint  ctermbg=4
 hi DiffAdd    ctermbg=22
 hi DiffDelete ctermbg=88
 
+hi link nixInterpolationParam nixInterpolationParam
+hi link nixInterpolationDelimiter PreProc
+
 let g:zig_fmt_autosave = 0
 
 " LANGUAGE SERVERS
