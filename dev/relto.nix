@@ -17,8 +17,8 @@ let
 
   simple-nixos-mailserver = builtins.fetchTarball {
     url =
-      "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/c63f6e7b053c18325194ff0e274dba44e8d2271e/nixos-mailserver-c63f6e7b053c18325194ff0e274dba44e8d2271e.tar.gz";
-    sha256 = "056vyjyzw4fi3y4jnzc5h6i5awg5klaxkhb77vrsg4i1qbg6lqmr";
+      "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/008d78cc21959e33d0d31f375b88353a7d7121ae/nixos-mailserver-008d78cc21959e33d0d31f375b88353a7d7121ae.tar.gz";
+    sha256 = "0pnfyg4icsvrw390a227m8b1j5w8awicx5aza3d0fiyyzpnrpn5a";
   };
 
 in {
@@ -38,9 +38,9 @@ in {
     fsType = "ext4";
   };
 
-  services.nscd.enable = false;
-  system.nssModules = lib.mkForce [ ];
-  networking.dhcpcd.enable = false;
+  # Unfortunately, scripted networking can't use DHCP only for IPv4.
+  networking.useDHCP = false;
+  services.resolved.enable = false;
   systemd.network.enable = true;
   systemd.network.networks."40-hetzner" = {
     matchConfig.Name = "ens3";
@@ -81,7 +81,6 @@ in {
 
     interfaces.ens3.allowedTCPPortRanges = lib.mkForce [ ];
     interfaces.ens3.allowedUDPPorts = lib.mkForce [
-      53 # wireguard
       30567 # wireguard
     ];
 
@@ -90,14 +89,6 @@ in {
       4242 # quassel
       5432 # postgresql
     ];
-
-    extraCommands = ''
-      ip46tables -w -t nat -A PREROUTING -p udp -i ens3 --dport 53 -j REDIRECT --to-ports 30567
-    '';
-
-    extraStopCommands = ''
-      ip46tables -w -t nat -D PREROUTING -p udp -i ens3 --dport 53 -j REDIRECT --to-ports 30567
-    '';
 
     logRefusedConnections = false;
   };
@@ -163,11 +154,11 @@ in {
   services.postgresql = {
     enable = true;
     settings.listen_addresses = lib.mkForce "localhost,172.27.0.1";
-    package = pkgs.postgresql_11;
+    package = pkgs.postgresql_16;
     ensureDatabases = postgresUsers;
     ensureUsers = map (name: {
       inherit name;
-      ensurePermissions."DATABASE ${name}" = "ALL PRIVILEGES";
+      ensureDBOwnership = true;
     }) postgresUsers;
     authentication = ''
       host lars,u16 lars 172.27.0.2/32 trust
