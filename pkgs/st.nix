@@ -5,6 +5,6 @@
     owner = "Lucus16";
     repo = "st";
     rev = "master";
-    sha256 = "sha256-PV6UeKuFm98vwsspIRGcLQcHpQsTIBf3pFETREFtyWY=";
+    sha256 = "sha256-9AFPMFs5c+3R3qTBhdrkvioHNWuXpFqNYqjUTUunOhE=";
   };
 }))
