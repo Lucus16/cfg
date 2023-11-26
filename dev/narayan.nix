@@ -17,6 +17,7 @@
   };
 
   hardware.asahi.addEdgeKernelConfig = true;
+  hardware.asahi.setupAlsaUcm = true;
   hardware.asahi.useExperimentalGPUDriver = true;
 
   hardware.bluetooth.enable = true;
