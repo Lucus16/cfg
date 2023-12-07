@@ -171,7 +171,7 @@ in {
     certificateFile = "/var/lib/quassel/quasselCert.pem";
     dataDir = "/var/lib/quassel";
     enable = true;
-    interfaces = [ "0.0.0.0" ];
+    interfaces = [ "0.0.0.0" "::" ];
     requireSSL = true;
   };
 
