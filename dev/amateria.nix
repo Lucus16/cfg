@@ -164,10 +164,10 @@
     ExternalSizeMax=16G
   '';
 
-  users.users.lars.extraGroups = [ "audio" "dialout" "wheel" ];
+  users.users.lars.extraGroups = [ "adbusers" "audio" "corectrl" "dialout" "wheel" ];
 
   users.users.lucus = {
-    extraGroups = [ "audio" ];
+    extraGroups = [ "audio" "corectrl" ];
     isNormalUser = true;
   };
 
