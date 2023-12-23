@@ -17,7 +17,6 @@
   };
 
   hardware.asahi.addEdgeKernelConfig = true;
-  hardware.asahi.setupAlsaUcm = true;
   hardware.asahi.useExperimentalGPUDriver = true;
 
   hardware.bluetooth.enable = true;
@@ -88,6 +87,7 @@
   services.pipewire.alsa.enable = true;
   services.pipewire.jack.enable = true;
   services.pipewire.pulse.enable = true;
+  services.pipewire.wireplumber.enable = true;
 
   services.udev.extraRules = lib.concatStringsSep "\n"
     (map (lib.concatStringsSep ", ") [
@@ -115,6 +115,8 @@
     windowManager.i3.enable = true;
     xkbOptions = "caps:escape";
   };
+
+  sound.enable = true;
 
   systemd.user.services.libinput-gestures = let
     i3 = config.services.xserver.windowManager.i3.package;
