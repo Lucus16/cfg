@@ -71,7 +71,6 @@ in {
       22 # ssh
       25 # smtp
       80 # http
-      143 # imap starttls
       443 # https
       465 # smtp tls
       587 # smtp starttls
