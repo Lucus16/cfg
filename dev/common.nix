@@ -26,7 +26,7 @@
     autoRepeatDelay = 250;
     autoRepeatInterval = 25;
     displayManager.job.logToJournal = false;
-    xkbOptions = "caps:escape";
+    xkb.options = "caps:escape";
   };
 
   time.timeZone = "Europe/Amsterdam";
