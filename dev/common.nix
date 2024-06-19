@@ -16,6 +16,8 @@
 
   nixpkgs.overlays = [ (import ../pkgs) ];
 
+  services.displayManager.logToJournal = false;
+
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
@@ -25,7 +27,6 @@
   services.xserver = {
     autoRepeatDelay = 250;
     autoRepeatInterval = 25;
-    displayManager.job.logToJournal = false;
     xkb.options = "caps:escape";
   };
 
