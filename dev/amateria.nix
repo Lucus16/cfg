@@ -56,14 +56,6 @@
   hardware.cpu.amd.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
 
-  # Vulkan and steam support
-  hardware = {
-    opengl.enable = true;
-    opengl.driSupport = true;
-    opengl.driSupport32Bit = true;
-    pulseaudio.support32Bit = true;
-  };
-
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.extraConfig = ''
     unload-module module-suspend-on-idle
@@ -119,6 +111,10 @@
   };
 
   programs.slock.enable = true;
+
+  programs.steam.enable = true;
+  programs.steam.gamescopeSession.enable = true;
+  programs.steam.protontricks.enable = true;
 
   sound.mediaKeys.enable = true;
 
