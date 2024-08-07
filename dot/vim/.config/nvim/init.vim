@@ -7,6 +7,8 @@ set ignorecase smartcase
 set clipboard+=unnamedplus " Use system clipboard
 set cino=:0
 
+let hs_allow_hash_operator = 1
+
 nmap <Space>bb <C-^>
 nmap <Space>fb :Buffers<CR>
 nmap <Space>ff :Files<CR>
@@ -32,6 +34,8 @@ au FileType sh          setlocal sts=2 ts=2 sw=2 et
 au FileType vim         setlocal sts=2 ts=2 sw=2 et
 au FileType yaml        setlocal sts=2 ts=2 sw=2 et
 
+au FileType haskell     au BufWritePre <buffer> lua vim.lsp.buf.format()
+
 hi Pmenu ctermbg=236 ctermfg=15
 hi DiagnosticFloatingError ctermfg=9  cterm=none
 hi DiagnosticFloatingWarn  ctermfg=11 cterm=none
@@ -54,7 +58,18 @@ let g:zig_fmt_autosave = 0
 lua << EOF
 
 require'lspconfig'.gopls.setup{}
-require'lspconfig'.hls.setup{}
+require'lspconfig'.hls.setup{
+  settings = {
+    haskell = {
+      formattingProvider = "fourmolu",
+      plugin = {
+        stan = {
+          globalOn = false,
+        },
+      },
+    },
+  },
+}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.zls.setup{}
 
