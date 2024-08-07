@@ -60,6 +60,29 @@ nmap <Space>le :lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic
 nmap <Space>lf :lua vim.lsp.buf.format()<CR>
 nmap <Space>lr :LspRestart<CR>
 
+" Thanks, ChatGPT.
+function! OpenDefaultNixOrFile()
+    " Get the filename under the cursor
+    let l:filename = expand('<cfile>')
+    if l:filename[0] == '.'
+        " Expand the filename to an absolute path
+        let l:filename = expand('%:p:h') . '/' . l:filename
+    endif
+    " Normalize the path (useful for paths with ../ and ./)
+    let l:filename = fnamemodify(l:filename, ':p')
+    if isdirectory(l:filename)
+        let l:filename = l:filename . '/default.nix'
+    endif
+    if filereadable(l:filename)
+        execute 'edit ' . l:filename
+    else
+        echohl ErrorMsg
+        echom 'File not found: ' . l:filename
+        echohl None
+    endif
+endfunction
+nnoremap gf :call OpenDefaultNixOrFile()<CR>
+
 " LANGUAGE SERVERS
 
 lua << EOF
