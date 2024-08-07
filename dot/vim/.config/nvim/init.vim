@@ -46,6 +46,7 @@ hi DiagnosticUnderlineError ctermbg=1
 hi DiagnosticUnderlineWarn  ctermbg=3
 hi DiagnosticUnderlineInfo  ctermbg=4
 hi DiagnosticUnderlineHint  ctermbg=4
+hi DiagnosticUnnecessary    ctermfg=8
 hi DiffAdd    ctermbg=22
 hi DiffDelete ctermbg=88
 
