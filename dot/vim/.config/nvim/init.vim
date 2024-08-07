@@ -15,7 +15,6 @@ nmap <Space>ff :Files<CR>
 nmap <Space>ft :Tags<CR>
 nmap <Space>r :%s/\C\<<C-R><C-W>\>/
 nmap <Space>w <C-W>
-nmap Q @q
 nmap j jzz
 nmap k kzz
 
