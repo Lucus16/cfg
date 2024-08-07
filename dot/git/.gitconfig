@@ -8,7 +8,7 @@
 	graph = log --all --graph --oneline
 	l = log --oneline
 	ls = ls-files
-	b = branch --sort=committerdate
+	b = -c pager.branch= branch --sort=committerdate
 	s = status
 	shortdiff = diff -w -U0 --color-words='\\w+|.' --color=always
 	staged = diff --staged
