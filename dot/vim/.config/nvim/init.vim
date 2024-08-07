@@ -52,6 +52,13 @@ hi link nixInterpolationDelimiter PreProc
 
 let g:zig_fmt_autosave = 0
 
+nmap <F2> :lua vim.diagnostic.goto_next()<CR>
+nmap <F3> :lua vim.lsp.buf.hover()<CR>
+nmap <Space>la :lua vim.lsp.buf.code_action()<CR>
+nmap <Space>ln :lua vim.diagnostic.goto_next()<CR>
+nmap <Space>lf :lua vim.lsp.buf.format()<CR>
+nmap <Space>lr :LspRestart<CR>
+
 " LANGUAGE SERVERS
 
 lua << EOF
@@ -78,10 +85,5 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     signs = false,
   }
 )
-EOF
 
-nmap <F2> :lua vim.diagnostic.goto_next()<CR>
-nmap <F3> :lua vim.lsp.buf.hover()<CR>
-nmap <Space>la :lua vim.lsp.buf.code_action()<CR>
-nmap <Space>ln :lua vim.diagnostic.goto_next()<CR>
-nmap <Space>lf :lua vim.lsp.buf.formatting()<CR>
+EOF
