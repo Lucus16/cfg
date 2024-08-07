@@ -1,3 +1,5 @@
+set notermguicolors
+colorscheme vim
 filetype plugin indent on
 syntax enable
 set bg=dark tw=80 so=3 et nohls nojs title hidden
