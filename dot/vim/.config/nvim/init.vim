@@ -29,6 +29,7 @@ au FileType java        setlocal sts=4 ts=4 sw=4 et
 au FileType javascript  setlocal sts=4 ts=4 sw=4 et
 au FileType json        setlocal sts=2 ts=2 sw=2 et
 au FileType purescript  setlocal sts=2 ts=2 sw=2 et
+au FileType rescript    setlocal sts=2 ts=2 sw=2 et
 au FileType sh          setlocal sts=2 ts=2 sw=2 et
 au FileType vim         setlocal sts=2 ts=2 sw=2 et
 au FileType yaml        setlocal sts=2 ts=2 sw=2 et
@@ -88,6 +89,7 @@ nnoremap gf :call OpenDefaultNixOrFile()<CR>
 lua << EOF
 
 require'lspconfig'.gopls.setup{}
+
 require'lspconfig'.hls.setup{
   settings = {
     haskell = {
@@ -100,8 +102,39 @@ require'lspconfig'.hls.setup{
     },
   },
 }
+
 require'lspconfig'.rust_analyzer.setup{}
+
 require'lspconfig'.zls.setup{}
+
+require'lspconfig'.rescriptls.setup{
+  settings = {
+    rescript = {
+      settings = {
+        askToStartBuild = false,
+        inlayHints = {
+          enable = true,
+        },
+        incrementalTypechecking = {
+          enabled = true,
+        },
+      },
+    },
+  },
+}
+
+require'lspconfig'.nil_ls.setup{
+  settings = {
+    ['nil'] = {
+      formatting = {
+        command = { "nixfmt" },
+      },
+      diagnostics = {
+        ignored = { "syntax_error" },
+      },
+    },
+  },
+}
 
 -- Disable slow and excessive semantic highlighting.
 vim.api.nvim_create_autocmd("LspAttach", {
