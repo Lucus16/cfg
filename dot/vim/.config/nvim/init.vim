@@ -54,8 +54,9 @@ let g:zig_fmt_autosave = 0
 
 nmap <F2> :lua vim.diagnostic.goto_next()<CR>
 nmap <F3> :lua vim.lsp.buf.hover()<CR>
-nmap <Space>la :lua vim.lsp.buf.code_action()<CR>
+nmap <Space>la :lua vim.lsp.buf.code_action({ apply = true })<CR>
 nmap <Space>ln :lua vim.diagnostic.goto_next()<CR>
+nmap <Space>le :lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.WARN } })<CR>
 nmap <Space>lf :lua vim.lsp.buf.format()<CR>
 nmap <Space>lr :LspRestart<CR>
 
