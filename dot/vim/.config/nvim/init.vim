@@ -22,6 +22,7 @@ vmap <Space>r y:%s/\C\V<C-R>0/
 
 au FileType bash        setlocal sts=2 ts=2 sw=2 et
 au FileType cabal       setlocal sts=2 ts=2 sw=2 et
+au FileType gitconfig   setlocal sts=8 ts=8 sw=8 noet
 au FileType go          setlocal sts=4 ts=4 sw=4 noet
 au FileType haskell     setlocal sts=2 ts=2 sw=2 et
 au FileType html        setlocal sts=2 ts=2 sw=2 et
