@@ -3,11 +3,8 @@
 {
   imports = [ ./common.nix ./lumiguide.nix ];
 
-  boot.binfmt.emulatedSystems = [
-    "aarch64-linux"
-    "armv6l-linux"
-    "armv7l-linux"
-  ];
+  boot.binfmt.emulatedSystems =
+    [ "aarch64-linux" "armv6l-linux" "armv7l-linux" ];
 
   # Needed for virtual machine nixos tests.
   boot.extraModprobeConfig = "options kvm-amd nested=1";
@@ -116,7 +113,33 @@
   programs.steam.gamescopeSession.enable = true;
   programs.steam.protontricks.enable = true;
 
-  sound.mediaKeys.enable = true;
+  services.actkbd = {
+    enable = true;
+    bindings = [
+      { # "Mute" media key
+        keys = [ 113 ];
+        events = [ "key" ];
+        command = "${pkgs.alsa-utils}/bin/amixer -q set Master toggle";
+      }
+      { # "Lower Volume" media key
+        keys = [ 114 ];
+        events = [ "key" "rep" ];
+        command =
+          "${pkgs.alsa-utils}/bin/amixer -q set Master 1%- unmute";
+      }
+      { # "Raise Volume" media key
+        keys = [ 115 ];
+        events = [ "key" "rep" ];
+        command =
+          "${pkgs.alsa-utils}/bin/amixer -q set Master 1%+ unmute";
+      }
+      { # "Mic Mute" media key
+        keys = [ 190 ];
+        events = [ "key" ];
+        command = "${pkgs.alsa-utils}/bin/amixer -q set Capture toggle";
+      }
+    ];
+  };
 
   # YubiKey
   services.pcscd.enable = true;
@@ -153,14 +176,13 @@
     };
   };
 
-  sound.enable = true;
-
   systemd.coredump.extraConfig = ''
     ProcessSizeMax=16G
     ExternalSizeMax=16G
   '';
 
-  users.users.lars.extraGroups = [ "adbusers" "audio" "corectrl" "dialout" "wheel" ];
+  users.users.lars.extraGroups =
+    [ "adbusers" "audio" "corectrl" "dialout" "wheel" ];
 
   users.users.lucus = {
     extraGroups = [ "audio" "corectrl" ];
