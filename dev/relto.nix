@@ -152,6 +152,24 @@ in {
       paths = "/var/vmail";
       startAt = "*-*-* 04:00:00";
     };
+
+    calendar = common-borg-options // {
+      paths = "/tmp/radicale";
+      startAt = "*-*-* 04:10:00";
+      preHook = ''
+        ${pkgs.util-linux}/bin/flock --shared /var/lib/radicale/collections/.Radicale.lock \
+          cp -r /var/lib/radicale/collections/collection-root /tmp/radicale
+      '';
+    };
+  };
+
+  services.nginx = {
+    enable = true;
+    virtualHosts."calendar.u16.nl" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".proxyPass = "http://127.0.0.1:5232/";
+    };
   };
 
   services.postgresql = {
@@ -174,6 +192,18 @@ in {
     enable = true;
     interfaces = [ "0.0.0.0" "::" ];
     requireSSL = true;
+  };
+
+  services.radicale = {
+    enable = true;
+    settings = {
+      server.hosts = [ "127.0.0.1:5232" ];
+      # htpasswd -B -c /var/lib/radicale/htpasswd $username
+      auth.type = "htpasswd";
+      auth.htpasswd_filename = "/var/lib/radicale/htpasswd";
+      auth.htpasswd_encryption = "bcrypt";
+      storage.filesystem_folder = "/var/lib/radicale/collections";
+    };
   };
 
   systemd.services.postgresql.after = [ "wireguard-larsnet.service" ];

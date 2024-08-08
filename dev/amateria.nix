@@ -100,6 +100,7 @@
 
   programs.adb.enable = true;
   programs.corectrl.enable = true;
+  programs.evolution.enable = true;
   programs.geary.enable = true;
 
   programs.gnupg.agent = {
