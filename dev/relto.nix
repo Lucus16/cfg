@@ -109,6 +109,8 @@ in {
       peers = lib.attrValues {
         nokia6.allowedIPs = [ "172.27.0.2" ];
         nokia6.publicKey = "LQI1iPdhSk5QxrTsL+2ZLRICz9wD4qIJZjrfc7w4NkE=";
+        pixel8a.allowedIPs = [ "172.27.0.3" ];
+        pixel8a.publicKey = "eEncxqkYoWhFEcJJjqq1aUQsghNATK1XcuTBinoZaXU=";
         amateria.allowedIPs = [ "172.27.0.4" ];
         amateria.publicKey = "lmL6nSdE3eP3R7KwHi7N4+Iaj2k6Qh9rNWigxYgD8CI=";
         edanna.allowedIPs = [ "172.27.0.5" ];
