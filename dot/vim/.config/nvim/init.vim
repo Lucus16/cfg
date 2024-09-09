@@ -9,15 +9,18 @@ set cino=:0
 
 let hs_allow_hash_operator = 1
 
+nmap gw :Rg <C-R><C-W><CR>
 nmap <Space>bb <C-^>
 nmap <Space>fb :Buffers<CR>
 nmap <Space>ff :Files<CR>
 nmap <Space>ft :Tags<CR>
+nmap <Space>fw :Rg <C-R><C-W><CR>
 nmap <Space>r :%s/\C\<<C-R><C-W>\>/
 nmap <Space>w <C-W>
 nmap j jzz
 nmap k kzz
 
+vmap gw y:Rg <C-R>0<CR>
 vmap <Space>r y:%s/\C\V<C-R>0/
 
 au FileType bash        setlocal sts=2 ts=2 sw=2 et
@@ -59,7 +62,7 @@ nmap <F2> :lua vim.diagnostic.goto_next()<CR>
 nmap <F3> :lua vim.lsp.buf.hover()<CR>
 nmap <Space>la :lua vim.lsp.buf.code_action({ apply = true })<CR>
 nmap <Space>ln :lua vim.diagnostic.goto_next()<CR>
-nmap <Space>le :lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.WARN } })<CR>
+nmap <Space>le :lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR } })<CR>
 nmap <Space>lf :lua vim.lsp.buf.format()<CR>
 nmap <Space>lr :LspRestart<CR>
 
