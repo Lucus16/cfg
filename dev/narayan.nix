@@ -16,7 +16,6 @@
     fsType = "vfat";
   };
 
-  hardware.asahi.addEdgeKernelConfig = true;
   hardware.asahi.useExperimentalGPUDriver = true;
 
   hardware.bluetooth.enable = true;
@@ -68,6 +67,7 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
 
+  programs.evolution.enable = true;
   programs.geary.enable = true;
 
   programs.gnupg.agent = {
@@ -79,6 +79,15 @@
 
   programs.xss-lock.enable = true;
   programs.xss-lock.lockerCommand = "/run/wrappers/bin/slock";
+
+  services.libinput = {
+    enable = true;
+    touchpad.accelSpeed = "0.3";
+    touchpad.buttonMapping = "1 3 2";
+    touchpad.disableWhileTyping = true;
+    touchpad.naturalScrolling = true;
+    touchpad.tapping = false;
+  };
 
   # YubiKey
   services.pcscd.enable = true;
@@ -106,17 +115,9 @@
     autoRepeatInterval = 25;
     dpi = 144;
     enable = true;
-    libinput.enable = true;
-    libinput.touchpad.accelSpeed = "0.3";
-    libinput.touchpad.buttonMapping = "1 3 2";
-    libinput.touchpad.disableWhileTyping = true;
-    libinput.touchpad.naturalScrolling = true;
-    libinput.touchpad.tapping = false;
     windowManager.i3.enable = true;
-    xkbOptions = "caps:escape";
+    xkb.options = "caps:escape";
   };
-
-  sound.enable = true;
 
   systemd.user.services.libinput-gestures = let
     i3 = config.services.xserver.windowManager.i3.package;
