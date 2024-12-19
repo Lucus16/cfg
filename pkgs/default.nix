@@ -20,4 +20,5 @@ in {
   pwgen = writePythonBin "pwgen" ../bin/pwgen;
   st = import ./st.nix { inherit (super) fetchFromGitHub st; };
   tisdone = self.callPackage ./tisdone.nix { };
+  factorio1 = self.callPackage ./factorio1.nix { };
 }
