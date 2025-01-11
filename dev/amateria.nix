@@ -50,6 +50,7 @@
     fsType = "vfat";
   };
 
+  hardware.amdgpu.opencl.enable = true;
   hardware.cpu.amd.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
 
@@ -137,6 +138,12 @@
     ];
   };
 
+  services.ollama = {
+    enable = true;
+    acceleration = "rocm";
+    rocmOverrideGfx = "11.0.0";
+  };
+
   # YubiKey
   services.pcscd.enable = true;
 
@@ -182,7 +189,7 @@
   services.xserver = {
     dpi = 144;
     enable = true;
-    videoDrivers = [ "modesetting" ];
+    videoDrivers = [ "amdgpu" "modesetting" ];
     wacom.enable = true;
     windowManager.i3.enable = true;
     xautolock = {
@@ -198,7 +205,7 @@
   '';
 
   users.users.lars.extraGroups =
-    [ "adbusers" "audio" "corectrl" "dialout" "wheel" ];
+    [ "adbusers" "audio" "corectrl" "dialout" "kvm" "wheel" ];
 
   users.users.lucus = {
     extraGroups = [ "audio" "corectrl" ];
