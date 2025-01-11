@@ -53,11 +53,6 @@
   hardware.cpu.amd.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
 
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.extraConfig = ''
-    unload-module module-suspend-on-idle
-  '';
-
   networking.dhcpcd.extraConfig = "noarp"; # Speed up DHCP from 5s to 1s.
   networking.hostName = "amateria";
   networking.interfaces.enp5s0.useDHCP = true;
@@ -147,6 +142,26 @@
 
   services.picom.enable = true;
   services.picom.vSync = true;
+
+  services.pipewire.enable = true;
+  services.pipewire.alsa.enable = true;
+  services.pipewire.jack.enable = true;
+  services.pipewire.pulse.enable = true;
+  services.pipewire.wireplumber.enable = true;
+  services.pipewire.wireplumber.extraConfig = {
+    "no-popping"."monitor.alsa.rules" = [
+      {
+        matches = [
+          { "node.name" = "~alsa_input.*"; }
+          { "node.name" = "~alsa_output.*"; }
+        ];
+        actions.update-props = {
+          "node.pause-on-idle" = false;
+          "session.suspend-timeout-seconds" = 0;
+        };
+      }
+    ];
+  };
 
   services.udev.extraRules = lib.concatStringsSep "\n"
     (map (lib.concatStringsSep ", ") [
