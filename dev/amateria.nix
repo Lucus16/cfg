@@ -40,6 +40,23 @@
     EndSection
   '';
 
+  environment.systemPackages = with pkgs; [
+    discord
+    feh
+    firefox
+    mpv
+    mupdf
+    nixfmt-classic
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-extra
+    obsidian
+    pass
+    prismlauncher
+    st
+    tdesktop
+  ];
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/b674a178-f90e-422b-bb42-13a2f4da3b8b";
     fsType = "ext4";
