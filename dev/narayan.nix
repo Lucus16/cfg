@@ -6,6 +6,10 @@
   boot.initrd.availableKernelModules = [ "usb_storage" ];
   boot.loader.efi.canTouchEfiVariables = false;
 
+  environment.variables = {
+    MOZ_USE_XINPUT2 = 1;
+  };
+
   fileSystems."/" = {
     device = "/dev/disk/by-label/narayan";
     fsType = "ext4";
