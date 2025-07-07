@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   imports = [ ./common.nix ./lumiguide.nix ];
@@ -209,11 +209,6 @@
     videoDrivers = [ "amdgpu" "modesetting" ];
     wacom.enable = true;
     windowManager.i3.enable = true;
-    xautolock = {
-      enable = true;
-      locker = "/run/wrappers/bin/slock";
-      time = 10; # minutes
-    };
   };
 
   systemd.coredump.extraConfig = ''
