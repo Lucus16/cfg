@@ -16,12 +16,14 @@ nmap <Space>ff :Files<CR>
 nmap <Space>ft :Tags<CR>
 nmap <Space>fw :Rg <C-R><C-W><CR>
 nmap <Space>r :%s/\C\<<C-R><C-W>\>/
+nmap <Space>R :%s/\C\<<C-R><C-W>\>/<C-R><C-W>
 nmap <Space>w <C-W>
 nmap j jzz
 nmap k kzz
 
 vmap gw y:Rg <C-R>0<CR>
 vmap <Space>r y:%s/\C\V<C-R>0/
+vmap <Space>R y:%s/\C\V<C-R>0/<C-R>0
 
 au FileType bash        setlocal sts=2 ts=2 sw=2 et
 au FileType cabal       setlocal sts=2 ts=2 sw=2 et
