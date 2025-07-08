@@ -2,7 +2,7 @@ set notermguicolors
 colorscheme vim
 filetype plugin indent on
 syntax enable
-set bg=dark tw=80 so=3 et nohls nojs title hidden
+set bg=dark tw=100 so=3 et nohls nojs title hidden
 set ignorecase smartcase
 set clipboard+=unnamedplus " Use system clipboard
 set cino=:0
