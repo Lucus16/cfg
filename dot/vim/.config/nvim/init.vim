@@ -25,6 +25,7 @@ vmap gw y:Rg <C-R>0<CR>
 vmap <Space>r y:%s/\C\V<C-R>0/
 vmap <Space>R y:%s/\C\V<C-R>0/<C-R>0
 vmap ga :EasyAlign<CR>
+vmap <LeftRelease> "*ygv
 
 au FileType bash        setlocal sts=2 ts=2 sw=2 et
 au FileType cabal       setlocal sts=2 ts=2 sw=2 et
