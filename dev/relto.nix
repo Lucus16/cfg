@@ -17,8 +17,8 @@ let
 
   simple-nixos-mailserver = builtins.fetchTarball {
     url =
-      "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/90326c4178fd80102ae6ef76d65a0a3fec681913/nixos-mailserver-90326c4178fd80102ae6ef76d65a0a3fec681913.tar.gz";
-    sha256 = "19yjniznqb1m4354ri8w1cx869acksxly70w56cymf2mnmz90jdw";
+      "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/eb656cd36128dd2173b1798b66a7645657e45609/nixos-mailserver-eb656cd36128dd2173b1798b66a7645657e45609.tar.gz";
+    sha256 = "1m0920njs3qzn2sz80li7vk68qb84p0315wawwhr5hsx9s7a54ir";
   };
 
 in {
@@ -64,6 +64,7 @@ in {
       aliases = [ "@u16.nl" ]; # Send from all addresses
     };
     fullTextSearch.enable = true;
+    stateVersion = 3;
   };
 
   networking.firewall = {
@@ -198,6 +199,7 @@ in {
 
   services.radicale = {
     enable = true;
+    package = pkgs.radicale3;
     settings = {
       server.hosts = [ "127.0.0.1:5232" ];
       # htpasswd -B -c /var/lib/radicale/htpasswd $username
