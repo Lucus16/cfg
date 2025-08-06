@@ -53,6 +53,7 @@
     obsidian
     pass
     prismlauncher
+    redshift
     st
     tdesktop
   ];
@@ -70,6 +71,9 @@
   hardware.amdgpu.opencl.enable = true;
   hardware.cpu.amd.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
+
+  location.latitude = 52.0;
+  location.longitude = 6.0;
 
   networking.dhcpcd.extraConfig = "noarp"; # Speed up DHCP from 5s to 1s.
   networking.hostName = "amateria";
@@ -184,6 +188,20 @@
           "session.suspend-timeout-seconds" = 0;
         };
       }
+    ];
+  };
+
+  services.redshift = {
+    enable = true;
+    temperature.day = 6500;
+    temperature.night = 2500;
+    extraOptions = [
+      "-P"
+      "-c${pkgs.writeText "redshift.conf" ''
+        [redshift]
+        dawn-time=06:00-08:00
+        dusk-time=21:00-23:00
+      ''}"
     ];
   };
 
