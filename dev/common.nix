@@ -20,8 +20,9 @@
 
   services.openssh = {
     enable = true;
-    settings.PasswordAuthentication = false;
     settings.KbdInteractiveAuthentication = false;
+    settings.LogLevel = "ERROR";
+    settings.PasswordAuthentication = false;
   };
 
   services.xserver = {
