@@ -24,6 +24,7 @@ let
 in {
   imports = [
     ./common.nix
+    ./ejabberd.nix
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     simple-nixos-mailserver
   ];
@@ -77,6 +78,8 @@ in {
       587 # smtp starttls
       993 # imap tls
       4242 # quassel
+      5222 # ejabberd c2s
+      5269 # ejabberd s2s
     ];
 
     interfaces.ens3.allowedTCPPortRanges = lib.mkForce [ ];
@@ -87,6 +90,7 @@ in {
     interfaces.ens3.allowedUDPPortRanges = lib.mkForce [ ];
     interfaces.larsnet.allowedTCPPorts = lib.mkForce [
       4242 # quassel
+      5222 # ejabberd c2s
       5432 # postgresql
     ];
 
