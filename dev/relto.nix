@@ -80,6 +80,7 @@ in {
       4242 # quassel
       5222 # ejabberd c2s
       5269 # ejabberd s2s
+      6697 # soju
     ];
 
     interfaces.ens3.allowedTCPPortRanges = lib.mkForce [ ];
@@ -177,6 +178,11 @@ in {
       forceSSL = true;
       locations."/".proxyPass = "http://127.0.0.1:5232/";
     };
+    virtualHosts."acme-challenge.u16.nl" = {
+      serverAliases = [ "*.u16.nl" ];
+      locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
+      locations."/".return = "301 https://$host$request_uri";
+    };
   };
 
   services.postgresql = {
@@ -212,6 +218,19 @@ in {
       auth.htpasswd_encryption = "bcrypt";
       storage.filesystem_folder = "/var/lib/radicale/collections";
     };
+  };
+
+  security.acme.certs.${config.services.soju.hostName}.webroot = "/var/lib/acme/acme-challenge";
+  systemd.services.soju.serviceConfig.SupplementaryGroups = [ "acme" ];
+  systemd.services.soju.requires = [ "acme-finished-${config.services.soju.hostName}.target" ];
+  systemd.services.soju.after = [ "acme-finished-${config.services.soju.hostName}.target" ];
+  services.soju = {
+    enable = true;
+    hostName = "soju.u16.nl";
+    tlsCertificate =
+      "${config.security.acme.certs.${config.services.soju.hostName}.directory}/fullchain.pem";
+    tlsCertificateKey =
+      "${config.security.acme.certs.${config.services.soju.hostName}.directory}/key.pem";
   };
 
   systemd.services.postgresql.after = [ "wireguard-larsnet.service" ];
