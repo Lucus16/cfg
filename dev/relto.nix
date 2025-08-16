@@ -221,16 +221,17 @@ in {
   };
 
   security.acme.certs.${config.services.soju.hostName}.webroot = "/var/lib/acme/acme-challenge";
-  systemd.services.soju.serviceConfig.SupplementaryGroups = [ "acme" ];
   systemd.services.soju.requires = [ "acme-finished-${config.services.soju.hostName}.target" ];
   systemd.services.soju.after = [ "acme-finished-${config.services.soju.hostName}.target" ];
+  systemd.services.soju.serviceConfig.LoadCredential = [
+    "fullchain.pem:${config.security.acme.certs.${config.services.soju.hostName}.directory}/fullchain.pem"
+    "key.pem:${config.security.acme.certs.${config.services.soju.hostName}.directory}/key.pem"
+  ];
   services.soju = {
     enable = true;
     hostName = "soju.u16.nl";
-    tlsCertificate =
-      "${config.security.acme.certs.${config.services.soju.hostName}.directory}/fullchain.pem";
-    tlsCertificateKey =
-      "${config.security.acme.certs.${config.services.soju.hostName}.directory}/key.pem";
+    tlsCertificate = "/run/credentials/soju.service/fullchain.pem";
+    tlsCertificateKey = "/run/credentials/soju.service/key.pem";
   };
 
   systemd.services.postgresql.after = [ "wireguard-larsnet.service" ];
