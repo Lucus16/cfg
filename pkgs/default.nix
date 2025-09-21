@@ -21,4 +21,9 @@ in {
   st = import ./st.nix { inherit (super) fetchFromGitHub st; };
   tisdone = self.callPackage ./tisdone.nix { };
   factorio1 = self.callPackage ./factorio1.nix { };
+  senpai = super.senpai.overrideAttrs (old: {
+    patches = (old.patches or [ ]) ++ [
+      ./senpai-Open-links-on-regular-click.patch
+    ];
+  });
 }

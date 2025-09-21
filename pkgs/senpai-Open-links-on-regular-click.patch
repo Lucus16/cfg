@@ -1,0 +1,61 @@
+From ad92b9fd781ab40c0ee60c61c813688b87277667 Mon Sep 17 00:00:00 2001
+From: Lars Jellema <lars.jellema@gmail.com>
+Date: Sun, 21 Sep 2025 17:20:53 +0200
+Subject: [PATCH] Open links on regular click
+
+---
+ app.go | 38 +-------------------------------------
+ 1 file changed, 1 insertion(+), 37 deletions(-)
+
+diff --git a/app.go b/app.go
+index 16e8bd2..485fbe3 100644
+--- a/app.go
++++ b/app.go
+@@ -1167,43 +1167,7 @@ func (app *App) handleLinkEvent(ev *events.EventClickLink) {
+ 		cmd.Run()
+ 	}
+ 
+-	if ev.Event.Modifiers == vaxis.ModCtrl {
+-		if ev.Mouse {
+-			// Only react to Ctrl+Click when mouse links are enabled.
+-
+-			// Explicit external link open requested with Ctrl+Click:
+-			// just run xdg-open.
+-			go open()
+-		}
+-		return
+-	}
+-
+-	// Regular link open requested:
+-	// Try fetching as an image and displaying a preview;
+-	// fall back to xdg-open if mouse links are enabled.
+-
+-	app.imageLoading = true
+-	go func() {
+-		img, err := app.fetchImage(ev.Link)
+-		if err != nil {
+-			app.postEvent(event{
+-				src: "*",
+-				content: &events.EventImageLoaded{
+-					Image: nil,
+-				},
+-			})
+-			if ev.Mouse {
+-				open()
+-			}
+-		} else {
+-			app.postEvent(event{
+-				src: "*",
+-				content: &events.EventImageLoaded{
+-					Image: img,
+-				},
+-			})
+-		}
+-	}()
++	go open()
+ }
+ 
+ func (app *App) upload(url string, f *os.File, size int64) (string, error) {
+-- 
+2.50.1
+
