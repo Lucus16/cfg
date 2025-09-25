@@ -63,6 +63,11 @@
     fsType = "ext4";
   };
 
+  fileSystems."/big" = {
+    device = "/dev/mapper/big-big";
+    fsType = "ext4";
+  };
+
   fileSystems."/boot/efi" = {
     device = "/dev/disk/by-uuid/83C5-DA38";
     fsType = "vfat";
