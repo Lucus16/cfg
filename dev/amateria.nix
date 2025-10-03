@@ -26,7 +26,6 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.loader.grub.device = "nodev";
   boot.loader.grub.efiSupport = true;
-  boot.loader.grub.useOSProber = true;
 
   environment.etc."X11/xorg.conf.d/71-wacom-options.conf".text = ''
     Section "InputClass"
