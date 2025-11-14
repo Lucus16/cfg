@@ -64,6 +64,12 @@
     fsType = "ext4";
   };
 
+  fileSystems."/games" = {
+    device = "/dev/disk/by-uuid/bceb000c-8052-48be-bcb8-f4cac557d2c5";
+    fsType = "ext4";
+    options = [ "nofail" ];
+  };
+
   fileSystems."/big" = {
     device = "/dev/mapper/big-big";
     fsType = "ext4";
