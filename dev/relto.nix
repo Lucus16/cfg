@@ -209,7 +209,7 @@ in {
 
   services.radicale = {
     enable = true;
-    package = pkgs.radicale3;
+    package = pkgs.radicale;
     settings = {
       server.hosts = [ "127.0.0.1:5232" ];
       # htpasswd -B -c /var/lib/radicale/htpasswd $username
