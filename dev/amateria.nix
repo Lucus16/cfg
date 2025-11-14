@@ -71,8 +71,9 @@
   };
 
   fileSystems."/big" = {
-    device = "/dev/mapper/big-big";
+    device = "/dev/disk/by-uuid/9f71a541-36e5-4884-b7de-b44453b3c780";
     fsType = "ext4";
+    options = [ "nofail" ];
   };
 
   fileSystems."/boot/efi" = {
