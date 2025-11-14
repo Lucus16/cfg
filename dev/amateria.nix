@@ -27,6 +27,8 @@
   boot.loader.grub.device = "nodev";
   boot.loader.grub.efiSupport = true;
 
+  boot.supportedFilesystems = [ "ntfs" ];
+
   environment.etc."X11/xorg.conf.d/71-wacom-options.conf".text = ''
     Section "InputClass"
       Identifier "WACOM OPTIONS pen"
