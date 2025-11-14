@@ -5,6 +5,7 @@
 
   environment.systemPackages = with pkgs; [
     gitMinimal
+    file
     htop
     man-pages
     ncdu
