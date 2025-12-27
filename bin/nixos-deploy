@@ -8,7 +8,7 @@ profile="/nix/var/nix/profiles/system"
 unset action machine jobs system target
 
 function usage {
-    echo 'nixos instantiate|build|copy|test|switch|boot|vm [ MACHINE ]'
+    echo 'nixos instantiate|build|copy|test|switch|boot|vm|install [ MACHINE ]'
     echo '  -f, --file     Nix file to find machine attribute in.'
     echo '  -p, --profile  Path to the profile to update.'
     echo '  -t, --target   SSH hostname to update.'
@@ -79,7 +79,7 @@ fi
 atTarget="ssh $target"
 
 case "$action" in
-  boot|copy|switch|test)
+  boot|copy|switch|test|install)
     system=$(nix-build $jobs --no-out-link "$NIXOS_MACHINES" -A "$machine.system")
     nix-copy-closure --use-substitutes --to "$target" "$system"
     ;;
@@ -106,4 +106,6 @@ case "$action" in
   test)
     $atTarget "$system/bin/switch-to-configuration" "$action"
     ;;
+  install)
+    $atTarget nixos-install --system "$system"
 esac
