@@ -145,7 +145,7 @@ require'lspconfig'.nil_ls.setup{
   },
 }
 
--- Disable slow and excessive semantic highlighting.
+-- Disable slow and excessive lsp-semantic-highlight
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -153,12 +153,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- Make diagnostics produce underline only.
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    signs = false,
-  }
-)
+vim.diagnostic.config({ virtual_text = false, signs = false })
 
 EOF
