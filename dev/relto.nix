@@ -123,8 +123,8 @@ in {
         edanna.publicKey = "kzlM5gXXaI9sl2TTnb14OY+qmFDc4aP89V/ITzcGhj4=";
         narayan.allowedIPs = [ "172.27.0.6" ];
         narayan.publicKey = "Nd/H8vMQ/9kB31xWJncZwKmOejLb8qTNbkubhA2N4VA=";
-        windows.allowedIPs = [ "172.27.0.7" ];
-        windows.publicKey = "8nfAgXA3U6EbsDfc/GX6JopEI8srx7uUNSGkdn4QIxE=";
+        serenia.allowedIPs = [ "172.27.0.7" ];
+        serenia.publicKey = "fgBpOMnDYUeglDXW4Ww7C4/dHoGVCQdf1IsP5yCqE1c=";
       };
     };
   };

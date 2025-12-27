@@ -3,6 +3,7 @@ let
     amateria = ./amateria.nix;
     narayan = ./narayan.nix;
     relto = ./relto.nix;
+    serenia = ./serenia.nix;
   };
 
   nixos = import ../nixpkgs/nixos;
