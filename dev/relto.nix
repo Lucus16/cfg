@@ -17,8 +17,8 @@ let
 
   simple-nixos-mailserver = builtins.fetchTarball {
     url =
-      "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/b633223a33f6aa2a81a8f65ed056be4234bd0822/nixos-mailserver-b633223a33f6aa2a81a8f65ed056be4234bd0822.tar.gz";
-    sha256 = "sha256:001n9j7s99cnhh840lmcsigs7z8ipn6wcq1raj58m6prp208rih7";
+      "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/7d433bf89882f61621f95082e90a4ab91eb0bdd3/nixos-mailserver-7d433bf89882f61621f95082e90a4ab91eb0bdd3.tar.gz";
+    sha256 = "sha256:0xlhl8zhcz5c6hvmpkfw9ay2lfnk6nhax8pphvbv3vzxf1p9dhw9";
   };
 
 in {
@@ -52,10 +52,14 @@ in {
 
   documentation.nixos.enable = false;
 
+  security.acme.certs."relto.u16.nl" = {
+    extraDomainNames = [ "imap.u16.nl" "mail.u16.nl" "smtp.u16.nl" ];
+    webroot = "/var/lib/acme/acme-challenge";
+  };
+
   mailserver = {
+    x509.useACMEHost = config.mailserver.fqdn;
     enable = true;
-    certificateDomains = [ "imap.u16.nl" "mail.u16.nl" "smtp.u16.nl" ];
-    certificateScheme = "acme-nginx";
     fqdn = "relto.u16.nl";
     domains = [ "u16.nl" ];
     loginAccounts."lars@u16.nl" = {
@@ -174,7 +178,8 @@ in {
     };
     virtualHosts."acme-challenge.u16.nl" = {
       serverAliases = [ "*.u16.nl" ];
-      locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
+      locations."/.well-known/acme-challenge".root =
+        "/var/lib/acme/acme-challenge";
       locations."/".return = "301 https://$host$request_uri";
     };
   };
@@ -218,11 +223,17 @@ in {
     reloadServices = [ "soju" ];
     webroot = "/var/lib/acme/acme-challenge";
   };
-  systemd.services.soju.requires = [ "acme-${config.services.soju.hostName}.service" ];
-  systemd.services.soju.after = [ "acme-${config.services.soju.hostName}.service" ];
+  systemd.services.soju.requires =
+    [ "acme-${config.services.soju.hostName}.service" ];
+  systemd.services.soju.after =
+    [ "acme-${config.services.soju.hostName}.service" ];
   systemd.services.soju.serviceConfig.LoadCredential = [
-    "fullchain.pem:${config.security.acme.certs.${config.services.soju.hostName}.directory}/fullchain.pem"
-    "key.pem:${config.security.acme.certs.${config.services.soju.hostName}.directory}/key.pem"
+    "fullchain.pem:${
+      config.security.acme.certs.${config.services.soju.hostName}.directory
+    }/fullchain.pem"
+    "key.pem:${
+      config.security.acme.certs.${config.services.soju.hostName}.directory
+    }/key.pem"
   ];
   services.soju = {
     enable = true;
