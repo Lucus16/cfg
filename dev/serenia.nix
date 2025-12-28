@@ -108,9 +108,9 @@ in {
 
   services.borgbackup.jobs = {
     minecraft = common-borg-options // {
-      # TODO: World only, excluding distant horizons data
       # TODO: wait for saving done message in journalctl with timeout
       paths = config.services.minecraft-server.dataDir;
+      exclude = [ "*/DistantHorizons.sqlite*" ];
       startAt = "*-*-* 05:30:00";
       preHook = ''
         echo /save-off > /run/minecraft-server.stdin
