@@ -50,13 +50,12 @@
     nixfmt-classic
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-extra
     obsidian
     pass
     prismlauncher
     redshift
     st
-    tdesktop
+    telegram-desktop
   ];
 
   fileSystems."/" = {
@@ -175,7 +174,7 @@
 
   services.ollama = {
     enable = true;
-    acceleration = "rocm";
+    package = pkgs.ollama-rocm;
     rocmOverrideGfx = "11.0.0";
   };
 
