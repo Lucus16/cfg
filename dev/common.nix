@@ -17,6 +17,12 @@
 
   nixpkgs.overlays = [ (import ../pkgs) ];
 
+  programs.ssh.knownHosts.spire = {
+    extraHostNames = [ "zh6185.rsync.net" ];
+    publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJtclizeBy1Uo3D86HpgD3LONGVH0CJ0NT+YfZlldAJd";
+  };
+
   services.displayManager.logToJournal = false;
 
   services.openssh = {

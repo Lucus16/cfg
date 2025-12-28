@@ -3,7 +3,7 @@
 let
   postgresUsers = [ "lars" "quassel" ];
 
-  spire = "19106@ch-s012.rsync.net";
+  spire = "zh6185@zh6185.rsync.net";
 
   common-borg-options = {
     encryption.mode = "repokey";
@@ -136,12 +136,6 @@ in {
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.localSystem = lib.systems.examples.gnu64;
-
-  programs.ssh.knownHosts.spire = {
-    extraHostNames = [ "ch-s012.rsync.net" ];
-    publicKey =
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO5lfML3qjBiDXi4yh3xPoXPHqIOeLNp66P3Unrl+8g3";
-  };
 
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "acme@u16.nl";
