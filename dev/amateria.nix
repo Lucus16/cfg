@@ -213,7 +213,7 @@
       "-c${pkgs.writeText "redshift.conf" ''
         [redshift]
         dawn-time=06:00-08:00
-        dusk-time=21:00-23:59
+        dusk-time=21:00-23:00
       ''}"
     ];
   };
