@@ -97,9 +97,11 @@ nnoremap gf :call OpenDefaultNixOrFile()<CR>
 
 lua << EOF
 
-require'lspconfig'.gopls.setup{}
+vim.lsp.config('gopls', {})
+vim.lsp.config('rust_analyzer', {})
+vim.lsp.config('zls', {})
 
-require'lspconfig'.hls.setup{
+vim.lsp.config('hls', {
   settings = {
     haskell = {
       formattingProvider = "fourmolu",
@@ -110,29 +112,25 @@ require'lspconfig'.hls.setup{
       },
     },
   },
-}
+})
 
-require'lspconfig'.rust_analyzer.setup{}
-
-require'lspconfig'.zls.setup{}
-
-require'lspconfig'.rescriptls.setup{
-  settings = {
-    rescript = {
-      settings = {
-        askToStartBuild = false,
-        inlayHints = {
-          enable = true,
-        },
-        incrementalTypechecking = {
-          enabled = true,
+vim.lsp.config('rescriptls', {
+    settings = {
+      rescript = {
+        settings = {
+          askToStartBuild = false,
+          inlayHints = {
+            enable = true,
+          },
+          incrementalTypechecking = {
+            enabled = true,
+          },
         },
       },
     },
-  },
-}
+  })
 
-require'lspconfig'.nil_ls.setup{
+vim.lsp.config('nil_ls', {
   settings = {
     ['nil'] = {
       formatting = {
@@ -143,7 +141,7 @@ require'lspconfig'.nil_ls.setup{
       },
     },
   },
-}
+})
 
 -- Disable slow and excessive lsp-semantic-highlight
 vim.api.nvim_create_autocmd("LspAttach", {
