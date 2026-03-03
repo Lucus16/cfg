@@ -42,6 +42,7 @@
   '';
 
   environment.systemPackages = with pkgs; [
+    android-tools
     discord
     feh
     firefox
@@ -127,7 +128,6 @@
 
   powerManagement.cpuFreqGovernor = "ondemand";
 
-  programs.adb.enable = true;
   programs.corectrl.enable = true;
   programs.evolution.enable = true;
   programs.geary.enable = true;
