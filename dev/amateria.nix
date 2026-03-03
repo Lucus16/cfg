@@ -207,7 +207,7 @@
   services.redshift = {
     enable = true;
     temperature.day = 6500;
-    temperature.night = 1000;
+    temperature.night = 2000;
     extraOptions = [
       "-P"
       "-c${pkgs.writeText "redshift.conf" ''
