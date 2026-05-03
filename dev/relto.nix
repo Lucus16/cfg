@@ -17,8 +17,8 @@ let
 
   simple-nixos-mailserver = builtins.fetchTarball {
     url =
-      "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/7d433bf89882f61621f95082e90a4ab91eb0bdd3/nixos-mailserver-7d433bf89882f61621f95082e90a4ab91eb0bdd3.tar.gz";
-    sha256 = "sha256:0xlhl8zhcz5c6hvmpkfw9ay2lfnk6nhax8pphvbv3vzxf1p9dhw9";
+      "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/e33fbde199eaad513ef5d0746db19d5878150232/nixos-mailserver-e33fbde199eaad513ef5d0746db19d5878150232.tar.gz";
+    sha256 = "sha256:0x73hf947cky34104cfqdaqpxykvcqhykvvg1jz6wrpfakvx4ghn";
   };
 
 in {
@@ -62,13 +62,17 @@ in {
     enable = true;
     fqdn = "relto.u16.nl";
     domains = [ "u16.nl" ];
-    loginAccounts."lars@u16.nl" = {
+    accounts."lars@u16.nl" = {
       hashedPassword =
         "$2y$05$KEryliesLyehI7i2dJudNOfYuX3UjUkrxv5WaDd96Q8XFAbwMqQHC";
       catchAll = [ "u16.nl" ]; # Receive from all addresses
       aliases = [ "@u16.nl" ]; # Send from all addresses
     };
-    fullTextSearch.enable = true;
+    fullTextSearch = {
+      enable = true;
+      filters = [ "normalizer-icu" "snowball" ];
+      languages = [ "en" "nl" ];
+    };
     stateVersion = 3;
   };
 
@@ -227,6 +231,7 @@ in {
     [ "acme-${config.services.soju.hostName}.service" ];
   systemd.services.soju.after =
     [ "acme-${config.services.soju.hostName}.service" ];
+  systemd.services.soju.serviceConfig.RefreshOnReload = true;
   systemd.services.soju.serviceConfig.LoadCredential = [
     "fullchain.pem:${
       config.security.acme.certs.${config.services.soju.hostName}.directory
