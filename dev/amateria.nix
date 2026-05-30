@@ -207,13 +207,13 @@
   services.redshift = {
     enable = true;
     temperature.day = 6500;
-    temperature.night = 2000;
+    temperature.night = 1500;
     extraOptions = [
       "-P"
       "-c${pkgs.writeText "redshift.conf" ''
         [redshift]
         dawn-time=06:00-08:00
-        dusk-time=21:00-23:00
+        dusk-time=21:00-23:30
       ''}"
     ];
   };
