@@ -242,10 +242,11 @@
     windowManager.i3.enable = true;
   };
 
-  systemd.coredump.extraConfig = ''
-    ProcessSizeMax=16G
-    ExternalSizeMax=16G
-  '';
+  users.users.cortana = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keyFiles = [ ../dot/ssh/.ssh/authorized_keys ];
+    packages = with pkgs; [ direnv opencode pi-coding-agent ];
+  };
 
   users.users.lars.extraGroups =
     [ "adbusers" "audio" "corectrl" "dialout" "kvm" "wheel" ];
