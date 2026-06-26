@@ -24,6 +24,7 @@ in {
   senpai = super.senpai.overrideAttrs (old: {
     patches = (old.patches or [ ]) ++ [
       ./senpai-Open-links-on-regular-click.patch
+      ./senpai-Exit-on-Ctrl-D.patch
     ];
   });
 }

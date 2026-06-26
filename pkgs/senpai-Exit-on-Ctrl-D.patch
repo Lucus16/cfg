@@ -1,0 +1,27 @@
+commit b976484b3373a513f9294e528a56726540f6c77a
+Author: Cortana <cortana@u16.nl>
+Date:   Fri Jun 26 14:48:28 2026 +0200
+
+    Exit on Ctrl+D
+
+diff --git a/app.go b/app.go
+index 485fbe3..4af391b 100644
+--- a/app.go
++++ b/app.go
+@@ -1025,6 +1025,16 @@ func (app *App) handleKeyEvent(ev vaxis.Key) {
+ 	default:
+ 		return
+ 	}
++
++	// Exit on Ctrl+D
++	if ev.Keycode == 'd' && ev.Modifiers&vaxis.ModCtrl != 0 && len(app.win.InputContent()) == 0 {
++		for _, session := range app.sessions {
++			session.Quit("")
++		}
++		app.win.Exit()
++		return
++	}
++
+ 	if ev.Text != "" {
+ 		for _, r := range ev.Text {
+ 			app.win.InputRune(r)
